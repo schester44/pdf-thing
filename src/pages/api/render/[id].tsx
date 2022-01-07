@@ -1,4 +1,5 @@
 import { renderToStream, Page, Text, View, Image, Document, StyleSheet } from "@react-pdf/renderer";
+import { get } from "lodash";
 
 type Node = {
   id: string;
@@ -24,7 +25,7 @@ const template: Template = {
     root: {
       id: "root",
       type: "view",
-      nodes: ["header", "general_information", "footer"],
+      nodes: ["header", "sections_container", "footer"],
     },
     footer_text: {
       id: "footer_text",
@@ -106,39 +107,71 @@ const template: Template = {
         src: "https://obiestatic.s3.amazonaws.com/logos/obie-spelled.png",
       },
     },
-    general_information: {
-      id: "general_information",
-      key: "general_information",
+    sections_container: {
+      id: "sections_container",
       type: "view",
-      nodes: ["general_information_header", "general_information_row"],
+      nodes: ["sections"],
+      parentId: "root",
+    },
+    sections: {
+      id: "sections",
+      key: "sections",
+      type: "view",
+      nodes: ["section_header", "section_rows", "section_footer"],
       parentId: "root",
       styles: {
-        background: "red",
+        marginBottom: 16,
       },
     },
-    general_information_header: {
-      id: "general_information_header",
+    section_header: {
+      id: "section_header",
       type: "view",
-      parentId: "general_information",
-      nodes: ["gi_header_text"],
+      parentId: "sections",
+      nodes: ["section_header_text"],
     },
-    gi_header_text: {
-      id: "gi_header_text",
+    section_footer: {
+      id: "section_footer",
+      type: "view",
+      parentId: "sections",
+      styles: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        color: "green",
+        borderTop: "3px dotted lightgray",
+        marginLeft: 10,
+        marginRight: 10,
+        padding: 10,
+      },
+      nodes: ["section_footer_name", "section_footer_value"],
+    },
+    section_footer_value: {
+      id: "section_footer_value",
       type: "text",
-      text: "General Information",
-      parentId: "general_information_header",
+      parentId: "section_footer",
+      key: "section_total",
+    },
+    section_footer_name: {
+      id: "section_total",
+      type: "text",
+      parentId: "section_footer",
+      key: "section_footer_name",
+    },
+    section_header_text: {
+      id: "section_header_text",
+      type: "text",
+      parentId: "section_header",
       styles: {
         fontWeight: "bold",
         color: "rgb(100,54,251)",
         padding: 8,
       },
     },
-    general_information_row: {
-      id: "general_information_row",
-      key: "general_information_row",
+    section_rows: {
+      id: "section_rows",
+      key: "section_rows",
       type: "view",
-      nodes: ["gi_name", "gi_value"],
-      parentId: "general_information",
+      nodes: ["name", "value"],
+      parentId: "sections",
       styles: {
         fontSize: 33,
         padding: "8px 16px",
@@ -149,25 +182,19 @@ const template: Template = {
         width: "100%",
       },
     },
-    gi_name: {
-      id: "gi_name",
-      key: "gi_name",
+    name: {
+      id: "name",
       type: "text",
-      parentId: "general_information_row",
       styles: {
         fontSize: 12,
-        fontFamily: "Helvetica",
       },
     },
-    gi_value: {
-      id: "gi_value",
-      key: "gi_value",
+    value: {
+      id: "name",
       type: "text",
-      parentId: "general_information_row",
       styles: {
         fontSize: 12,
-        fontFamily: "Helvetica",
-        fontWeight: "bold",
+        fontFamily: "Helvetica-Bold",
       },
     },
   },
@@ -177,24 +204,75 @@ const nodeIds = Object.keys(template.nodes);
 
 const payload: Payload = {
   quote_number: "QuoteNumber: 1423",
-  general_information_row: [
+  sections: [
     {
-      gi_name: "Insured Name",
-      gi_value: "Client Clientson",
+      section_header_text: "Munich Information",
+      section_rows: [
+        {
+          name: "Insured Name",
+          value: "John Doe",
+        },
+        {
+          name: "Arcana Reg #",
+          value: "1242",
+        },
+        {
+          name: "Property Type",
+          value: "Residential 1-4 Family Dwelling",
+        },
+        {
+          name: "Property Address",
+          value: "8918 S. Wacker Dr. Chicago, IL 60606",
+        },
+      ],
     },
+
     {
-      gi_name: "Arcana Reg #",
-      gi_value: "26968282958",
+      section_header_text: "Quote Information",
+      section_rows: [
+        {
+          name: "Quote Date",
+          value: "November 12, 2021",
+        },
+        {
+          name: "Proposed effective start date",
+          value: "November 12, 2021",
+        },
+        {
+          name: "Quote valid until",
+          value: "December 12, 2021",
+        },
+        {
+          name: "Policy Type",
+          value: "DP3-0003 Dwelling Policy",
+        },
+      ],
     },
+
     {
-      gi_name: "Property Type",
-      gi_value: "Residential 1-4 Family Dwelling",
-    },
-    {
-      gi_name: "Propert Address",
-      gi_value: "8982 S. Wacker Dr. Chicago, IL 60606",
+      section_header_text: "Premium & Fees",
+      section_footer: {
+        name: "Total annual premium",
+        value: "$1,000.00",
+      },
+      section_rows: [
+        {
+          name: "8918 S. Wacker Dr. Chicago, IL 60606",
+          value: "$1,379.00",
+        },
+      ],
     },
   ],
+};
+
+const recursivelyGetParent = (nodeId: string, parentIndex?: number): string => {
+  const parent = template.nodes[nodeId].parentId;
+
+  if (parent && parent !== "root") {
+    return recursivelyGetParent(parent) + "." + (parentIndex ? `[${parentIndex}].` : "") + nodeId;
+  } else {
+    return nodeId;
+  }
 };
 
 const renderNode = (
@@ -202,7 +280,9 @@ const renderNode = (
   data: string | null,
   node: Node,
   payload: Payload,
-  styles: Record<string, any>
+  styles: Record<string, any>,
+  parentIndex?: number,
+  parentNodePath?: string
 ) => {
   const style = styles[nodeId];
 
@@ -216,7 +296,7 @@ const renderNode = (
     case "text":
       return (
         <Text key={nodeId} style={style}>
-          {data || node.text}
+          {data || node.text || ""}
         </Text>
       );
     case "view":
@@ -227,12 +307,20 @@ const renderNode = (
               {node.nodes?.map((childNodeId) => {
                 const childData = data[childNodeId];
 
+                //TODO:We want to get the complete path to the data in the payload
+                // eg: "sections[0].section_rows[0].name"
+                // eg: "sections[0].section_header_text"
+
+                const parentNodeId = recursivelyGetParent(nodeId, parentIndex);
+
                 return renderNode(
                   childNodeId,
                   childData,
                   template.nodes[childNodeId],
                   payload,
-                  styles
+                  styles,
+                  index,
+                  `${parentNodeId}.[${index}]`
                 );
               })}
             </View>
@@ -243,9 +331,20 @@ const renderNode = (
       return (
         <View {...node.props} key={nodeId} style={style}>
           {node.nodes?.map((childNodeId) => {
-            const data = payload[childNodeId];
+            const data = get(
+              payload,
+              parentNodePath ? `${parentNodePath}.${childNodeId}` : childNodeId
+            );
 
-            return renderNode(childNodeId, data, template.nodes[childNodeId], payload, styles);
+            return renderNode(
+              childNodeId,
+              data,
+              template.nodes[childNodeId],
+              payload,
+              styles,
+              undefined,
+              nodeId === "root" ? undefined : nodeId
+            );
           })}
         </View>
       );
