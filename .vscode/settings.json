@@ -1,0 +1,7 @@
+{
+  "cSpell.words": [
+    "codegen",
+    "tailwindcss"
+  ],
+  "typescript.tsdk": "node_modules/typescript/lib"
+}

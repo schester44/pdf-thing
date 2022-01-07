@@ -1,0 +1,100 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum ProjectUserRole {
+  USER
+  ADMIN
+}
+
+model ProjectUsers {
+  project   Project         @relation(fields: [projectId], references: [id])
+  user      User            @relation(fields: [userId], references: [id])
+  role      ProjectUserRole @default(USER)
+  projectId String
+  userId    Int
+  createdAt DateTime        @default(now())
+
+  @@unique([projectId, userId])
+}
+
+model Project {
+  id                String         @id @default(uuid())
+  name              String
+  users             ProjectUsers[]
+  externalBillingId String?
+  subscriptions     Subscription[]
+}
+
+model Session {
+  id             Int      @id @default(autoincrement())
+  userId         Int      @map(name: "user_id")
+  expires        DateTime
+  sessionToken   String   @unique @map(name: "session_token")
+  accessToken    String   @unique @map(name: "access_token")
+  createdAt      DateTime @default(now()) @map(name: "created_at")
+  updatedAt      DateTime @default(now()) @map(name: "updated_at")
+  currentProject String?
+
+  @@map(name: "sessions")
+}
+
+model User {
+  id            Int            @id @default(autoincrement())
+  name          String?
+  email         String?        @unique
+  emailVerified DateTime?      @map(name: "email_verified")
+  image         String?
+  createdAt     DateTime       @default(now()) @map(name: "created_at")
+  updatedAt     DateTime       @default(now()) @map(name: "updated_at")
+  projects      ProjectUsers[]
+
+  ProjectInvites UserInvites? @relation("user")
+  UsersInvited   UserInvites? @relation("invitedBy")
+
+  @@map(name: "users")
+}
+
+model UserInvites {
+  id              Int      @id @default(autoincrement())
+  user            User     @relation("user", fields: [userId], references: [id])
+  createdAt       DateTime @default(now()) @map(name: "created_at")
+  userId          Int
+  projectId       String
+  accepted        Boolean  @default(false)
+  invitedByUserId Int
+  invitedBy       User     @relation("invitedBy", fields: [invitedByUserId], references: [id])
+
+
+
+  @@unique([projectId, userId])
+}
+
+model VerificationRequest {
+  id         Int      @id @default(autoincrement())
+  identifier String
+  token      String   @unique
+  expires    DateTime
+  createdAt  DateTime @default(now()) @map(name: "created_at")
+  updatedAt  DateTime @default(now()) @map(name: "updated_at")
+
+  @@map(name: "verification_requests")
+}
+
+model Subscription {
+  id                String   @id @default(uuid())
+  project           Project  @relation(fields: [projectId], references: [id])
+  projectId         String
+  externalProductId String
+  externalId        String
+  startDate         DateTime @default(now())
+  endDate           DateTime @default(now())
+}
