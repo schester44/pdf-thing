@@ -1,10 +1,19 @@
-import { renderToStream, Page, Text, View, Image, Document, StyleSheet } from "@react-pdf/renderer";
+import {
+  renderToStream,
+  Page,
+  Text,
+  View,
+  Image,
+  Document,
+  StyleSheet,
+  Svg,
+} from "@react-pdf/renderer";
 import { get } from "lodash";
 
 type Node = {
   id: string;
   key?: string;
-  type: "text" | "view" | "image" | "page_number";
+  type: "page" | "text" | "view" | "image" | "page_number";
   parentId?: string;
   nodes?: Node["id"][];
   styles?: Record<string, any>;
@@ -15,16 +24,21 @@ type Node = {
 type Payload = Record<string, any>;
 
 type Template = {
-  rootNodeId: Node["id"];
+  pageIds: Node["id"][];
   nodes: Record<string, Node>;
 };
 
 const template: Template = {
-  rootNodeId: "root",
+  pageIds: ["root", "root-2"],
   nodes: {
+    "root-2": {
+      id: "root-2",
+      type: "page",
+      nodes: ["footer"],
+    },
     root: {
       id: "root",
-      type: "view",
+      type: "page",
       nodes: ["header", "sections_container", "footer"],
     },
     footer_text: {
@@ -287,6 +301,27 @@ const renderNode = (
   const style = styles[nodeId];
 
   switch (node.type) {
+    case "page":
+      return (
+        <Page size="A4" {...node.props} key={nodeId} style={style}>
+          {node.nodes?.map((childNodeId) => {
+            const data = get(
+              payload,
+              parentNodePath ? `${parentNodePath}.${childNodeId}` : childNodeId
+            );
+
+            return renderNode(
+              childNodeId,
+              data,
+              template.nodes[childNodeId],
+              payload,
+              styles,
+              undefined,
+              nodeId === "root" ? undefined : nodeId
+            );
+          })}
+        </Page>
+      );
     case "image":
       return <Image src={node.props?.src} {...node.props} style={style} key={nodeId} />;
     case "page_number":
@@ -372,15 +407,9 @@ const Renderer = () => {
 
   return (
     <Document>
-      <Page size="A4">
-        {renderNode(
-          template.rootNodeId,
-          null,
-          template.nodes[template.rootNodeId],
-          payload,
-          styles
-        )}
-      </Page>
+      {template.pageIds.map((id) => {
+        return renderNode(id, null, template.nodes[id], payload, styles);
+      })}
     </Document>
   );
 };

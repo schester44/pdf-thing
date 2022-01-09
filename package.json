@@ -68,10 +68,13 @@
     "pino": "^6.13.3",
     "postcss": "^8.3.8",
     "react": "^18.0.0-alpha-4298ddbc5-20211023",
+    "react-dnd": "^14.0.5",
+    "react-dnd-html5-backend": "^14.1.0",
     "react-dom": "^18.0.0-alpha-4298ddbc5-20211023",
-    "react-icons": "^4.2.0",
+    "react-icons": "^4.3.1",
     "react-modal-hook": "^3.0.0",
     "react-pdf-html": "^1.1.8",
+    "recoil": "^0.5.2",
     "reflect-metadata": "^0.1.13",
     "stripe": "^8.178.0",
     "superjson": "^1.7.5",
@@ -80,6 +83,7 @@
     "type-graphql": "^1.1.1",
     "typeorm": "^0.2.37",
     "urql": "^2.0.5",
+    "uuid": "^8.3.2",
     "wait-on": "^6.0.0"
   },
   "devDependencies": {

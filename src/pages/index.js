@@ -7,7 +7,7 @@ function Home() {
   if (loading) return <div>LOADING</div>;
 
   return (
-    <div className="relative flex flex-col min-h-screen bg-white">
+    <div className="relative flex flex-col min-h-screen bg-gray-900">
       <Head>
         <title>Starter</title>
         <link rel="icon" href="/favicon.ico" />
@@ -35,7 +35,7 @@ function Home() {
               </Link>
             ) : (
               <Link href="/app">
-                <button className="bg-gray-400 rounded px-2 py-1 text-sm cursor hover:bg-gray-600">
+                <button className="bg-gray-900 rounded px-2 py-1 text-sm cursor hover:bg-gray-600">
                   Dashboard
                 </button>
               </Link>

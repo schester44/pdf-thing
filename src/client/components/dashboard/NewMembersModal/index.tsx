@@ -43,7 +43,7 @@ const NewMembersModal = ({ projectId, open = true, onClose }: Props) => {
             leave="ease-in duration-200"
             leaveTo="opacity-0"
           >
-            <Dialog.Overlay className="fixed inset-0 bg-gray-400 opacity-50" />
+            <Dialog.Overlay className="fixed inset-0 bg-gray-900 opacity-50" />
           </Transition.Child>
         </div>
 
@@ -57,7 +57,7 @@ const NewMembersModal = ({ projectId, open = true, onClose }: Props) => {
           leaveFrom="transform scale-100"
           leaveTo="transform scale-95"
         >
-          <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded">
+          <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-gray-900 shadow-xl rounded">
             <Dialog.Title className="text-lg leading-none font-medium text-gray-900">
               Invite a team member
             </Dialog.Title>
