@@ -5,6 +5,7 @@ export type Template = {
 
 export type Node = {
   id: string;
+  name: string;
   key?: string;
   type: "page" | "text" | "view" | "image" | "page_number";
   parentId?: string;

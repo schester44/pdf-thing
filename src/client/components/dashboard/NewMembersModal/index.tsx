@@ -21,9 +21,6 @@ const NewMembersModal = ({ projectId, open = true, onClose }: Props) => {
       email,
       name,
     });
-
-    console.log({ result });
-    // TODO: Show toast or errors
   }
 
   return (

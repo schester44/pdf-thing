@@ -2,7 +2,7 @@ import { useRefDimensions } from "@client/hooks/useRefDimensions";
 import { MutableRefObject, useEffect } from "react";
 import { useRecoilLocalStorage } from "../recoil/hooks/useRecoilLocalStorage";
 
-const RESERVED_SPACE = 400;
+const RESERVED_SPACE = 0;
 
 export const useScale = (containerRef: MutableRefObject<HTMLElement | null>, pageWidth: number) => {
   const [scaleData, setScale] = useRecoilLocalStorage("scale", () => {

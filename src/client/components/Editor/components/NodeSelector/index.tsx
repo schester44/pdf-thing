@@ -1,6 +1,8 @@
 import { useDrag } from "react-dnd";
 import { BsBox, BsImage } from "react-icons/bs";
 import { MdTextFields } from "react-icons/md";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { dropPlaceholderState } from "../../recoil/atoms";
 import { Node } from "../../types";
 
 const iconMap = {
@@ -13,13 +15,13 @@ const NodeTypeButton = ({ type }: { type: Node["type"] }) => {
   const [{ isDragging }, drag, dragPreview] = useDrag({
     type,
     item: { type },
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-    }),
+    collect: (monitor) => {
+      return {
+        isDragging: monitor.isDragging(),
+      };
+    },
     end: async (_, monitor) => {
       const result = monitor.getDropResult();
-
-      console.log(result);
     },
   });
 

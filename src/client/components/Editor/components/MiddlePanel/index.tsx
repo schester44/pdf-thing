@@ -1,10 +1,10 @@
 import cn from "classnames";
 import { CanvasContainer as Canvas } from "../Canvas";
-import { Previewer } from "../Previewer";
+import { DataEditor } from "../DataEditor";
 
 type Props = {
-  activeWindow: "design" | "preview";
-  onWindowChange: (window: "design" | "preview") => void;
+  activeWindow: "design" | "data";
+  onWindowChange: (window: "design" | "data") => void;
 };
 
 export const MiddlePanel = ({ activeWindow, onWindowChange }: Props) => {
@@ -15,7 +15,7 @@ export const MiddlePanel = ({ activeWindow, onWindowChange }: Props) => {
       </div>
 
       {activeWindow === "design" && <Canvas />}
-      {activeWindow === "preview" && <Previewer />}
+      {activeWindow === "data" && <DataEditor />}
     </div>
   );
 };
@@ -35,13 +35,13 @@ const Toolbar = ({ activeWindow, onWindowChange }: Props) => {
           Design
         </div>
         <div
-          onClick={() => onWindowChange("preview")}
+          onClick={() => onWindowChange("data")}
           className={cn("flex items-center justify-center text-white p-3 border-t-2  text-sm", {
-            "border-indigo-500 bg-gray-800": activeWindow === "preview",
-            "cursor-pointer border-gray-900 ": activeWindow !== "preview",
+            "border-indigo-500 bg-gray-800": activeWindow === "data",
+            "cursor-pointer border-gray-900 ": activeWindow !== "data",
           })}
         >
-          Preview
+          Sample Data
         </div>
       </div>
       <div></div>

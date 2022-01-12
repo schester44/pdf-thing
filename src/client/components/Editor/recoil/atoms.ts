@@ -19,9 +19,45 @@ export const pageIdsState = atom<string[]>({
   default: [],
 });
 
+export const dropPlaceholderState = atom({
+  key: "dropPlaceholderState",
+  default: {
+    x: 0,
+    y: 0,
+    width: 0,
+    height: 0,
+  },
+});
+
+export const hiddenNodesState = atom<Record<Node["id"], boolean>>({
+  key: "hiddenNodesState",
+  default: {},
+});
+
+export const totalNodeCountsState = atom<Record<Node["type"], number>>({
+  key: "nodeCounts",
+  default: {
+    page: 0,
+    text: 0,
+    view: 0,
+    image: 0,
+    page_number: 0,
+  },
+});
+
 export const nodesState = atomFamily<Node | undefined, string>({
   key: "nodesState",
   default: undefined,
+});
+
+export const collapsedTreeNodesState = atom<string[]>({
+  key: "collapsedTreeNodesState",
+  default: [],
+});
+
+export const collapsedSettingsPanelState = atom<string[]>({
+  key: "collapsedSettingsPanelState",
+  default: ["Layout"],
 });
 
 export const selectedNodeState = atom<string | undefined>({

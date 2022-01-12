@@ -1,19 +1,21 @@
 import cn from "classnames";
-import { useRefDimensions } from "@client/hooks/useRefDimensions";
-import { MutableRefObject, useEffect, useRef } from "react";
+import { useRef } from "react";
 import { useRecoilValue } from "recoil";
-import { documentState, pageIdsState } from "../../recoil/atoms";
-import { useRecoilLocalStorage } from "../../recoil/hooks/useRecoilLocalStorage";
+import { documentState, dropPlaceholderState, pageIdsState } from "../../recoil/atoms";
 import { NodeSelector } from "../NodeSelector";
 
 import { Page } from "./Page";
 import { useScale } from "../../hooks/useScale";
+import { SiOneplus } from "react-icons/si";
+import { useNewPage } from "../../recoil/hooks/useNewPage";
 
 export const CanvasContainer = () => {
   const { pageWidth, pageHeight } = useRecoilValue(documentState);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   const scale = useScale(containerRef, pageWidth);
+
+  const createPage = useNewPage();
 
   if (!scale) return null;
 
@@ -26,6 +28,13 @@ export const CanvasContainer = () => {
           <div className="mx-auto my-auto">
             <div className="flex items-center flex-col py-12">
               <Canvas scale={scale} pageWidth={pageWidth} pageHeight={pageHeight} />
+
+              <div
+                onClick={() => createPage()}
+                className="mt-2 text-xs text-gray-400 rounded-full border border-gray-600 py-1 px-8 flex items-center cursor-pointer hover:bg-gray-900 hover:text-white border-dashed hover:border-solid"
+              >
+                Add Page <SiOneplus className="ml-2" />
+              </div>
             </div>
           </div>
         </div>
@@ -40,11 +49,37 @@ type CanvasProps = {
   pageHeight: number;
 };
 
+const Positioner = () => {
+  const positioner = useRecoilValue(dropPlaceholderState);
+
+  console.log({ positioner });
+  if (!positioner) return null;
+
+  if (positioner.x === 0 && positioner.y === 0) return null;
+
+  return (
+    <div
+      className="bg-red fixed"
+      style={{
+        ...positioner,
+        zIndex: 100,
+        background: "red",
+        top: positioner.y,
+        left: positioner.x,
+      }}
+    >
+      xx
+    </div>
+  );
+};
+
 const Canvas = ({ scale, pageWidth, pageHeight }: CanvasProps) => {
   const pageIds = useRecoilValue(pageIdsState);
 
   return (
     <div>
+      <Positioner />
+
       {pageIds.map((pageId, index) => {
         return (
           <div

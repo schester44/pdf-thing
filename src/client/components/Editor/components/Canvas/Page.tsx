@@ -49,6 +49,7 @@ export const Page = ({ id, width, height, scale }: Props) => {
 
   return drop(
     <div
+      data-type="page"
       className={cn("rounded-lg bg-white overflow-hidden shadow", {
         "shadow-green-400": collectedProps.isOver,
         "border-white": !collectedProps.isOver,

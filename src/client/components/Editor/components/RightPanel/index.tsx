@@ -4,7 +4,7 @@ import { NodeEditor } from "../NodeEditor";
 
 export const RightPanel = () => {
   return (
-    <div className="w-1/6 bg-gray-900 text-white">
+    <div className="w-1/4 bg-gray-900 text-white h-full flex flex-col">
       <div className="flex justify-end p-2">
         <Button size="sm" type="primary" className="flex items-center">
           Save
@@ -12,7 +12,7 @@ export const RightPanel = () => {
         </Button>
       </div>
 
-      <div>
+      <div className="flex-1 overflow-y-auto">
         <NodeEditor />
       </div>
     </div>

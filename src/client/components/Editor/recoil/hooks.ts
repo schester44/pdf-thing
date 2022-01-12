@@ -1,39 +1,50 @@
 import { useRecoilCallback } from "recoil";
-import { v4 } from "uuid";
 import { Node } from "../types";
-import { nodesState } from "./atoms";
+import { nodesState, totalNodeCountsState } from "./atoms";
+import { createNode } from "./utils/createPage";
 
-const createNode = ({ type, parentId }: { type: Node["type"]; parentId: Node["id"] }): Node => {
-  const node: Node = {
-    id: v4(),
-    type,
-    parentId,
-  };
-
-  if (node.type === "view") {
-    node.nodes = [];
-  }
-
-  return node;
+type NewNodeArgs = {
+  type: Node["type"];
+  parentId: Node["id"];
+  positionInParent?: number;
+  styles?: Node["styles"];
+  nodes?: Node["nodes"];
 };
 
 export function useNewNode() {
-  return useRecoilCallback(({ set, snapshot }) => async ({ type, parentId }) => {
-    const node = createNode({ type, parentId });
+  return useRecoilCallback(
+    ({ set, snapshot }) =>
+      async ({ type, parentId, positionInParent }: NewNodeArgs) => {
+        const nodeCounts = snapshot.getLoadable(totalNodeCountsState).contents;
 
-    set(nodesState(node.id), () => node);
+        const name = `${type === "view" ? "container" : type} ${nodeCounts[type] + 1}`;
 
-    console.log(node, parentId);
+        const node = createNode({ type, parentId, name });
 
-    const parentNode = snapshot.getLoadable(nodesState(parentId)).contents;
+        set(nodesState(node.id), () => node);
 
-    set(nodesState(parentId), () => {
-      return {
-        ...parentNode,
-        nodes: [...parentNode.nodes, node.id],
-      };
-    });
+        set(totalNodeCountsState, (counts) => ({
+          ...counts,
+          [node.type]: counts[node.type] + 1,
+        }));
 
-    return node;
-  });
+        set(nodesState(parentId), (parentNode) => {
+          if (!parentNode) return parentNode;
+
+          let position = positionInParent || (parentNode.nodes || []).length;
+
+          // tood: ugly syntax.. if  this is a view node then nodes should always  exist
+          return {
+            ...parentNode,
+            nodes: [
+              ...(parentNode.nodes || []).slice(0, position),
+              node.id,
+              ...(parentNode.nodes || []).slice(position),
+            ],
+          };
+        });
+
+        return node;
+      }
+  );
 }

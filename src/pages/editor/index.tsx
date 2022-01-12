@@ -1,4 +1,3 @@
-import { v4 } from "uuid";
 import { EditorContainer as Editor } from "@client/components/Editor";
 import { Template } from "@client/components/Editor/types";
 
@@ -13,8 +12,10 @@ const template: Template = {
       id: "root",
       type: "page",
       nodes: ["header", "sections_container", "footer"],
+      name: "Page 1",
     },
     footer_text: {
+      name: "Footer Text",
       id: "footer_text",
       type: "text",
       parentId: "footer",
@@ -25,6 +26,7 @@ const template: Template = {
       },
     },
     page_number: {
+      name: "Page Number",
       id: "page_number",
       type: "view",
       parentId: "footer",
@@ -41,11 +43,13 @@ const template: Template = {
       },
     },
     page_number_text: {
+      name: "Page Number Text",
       id: "page_number_text",
       type: "page_number",
       parentId: "page_number",
     },
     footer: {
+      name: "Footer",
       id: "footer",
       type: "view",
       parentId: "root",
@@ -61,10 +65,49 @@ const template: Template = {
         alignItems: "center",
       },
     },
+
+    blue_box: {
+      name: "blue Box",
+      id: "blue_box",
+      type: "view",
+      parentId: "header",
+      styles: {
+        width: "150px",
+        height: "150px",
+        backgroundColor: "blue",
+      },
+    },
+
+    red_box: {
+      name: "red Box",
+      id: "red_box",
+      type: "view",
+      parentId: "header",
+      styles: {
+        width: "150px",
+        height: "150px",
+        backgroundColor: "red",
+      },
+    },
+
+    green_box: {
+      name: "green Box",
+      id: "green_box",
+      type: "view",
+      parentId: "header",
+      styles: {
+        width: "150px",
+        height: "150px",
+        backgroundColor: "green",
+      },
+    },
+
     header: {
+      name: "Header",
       id: "header",
       type: "view",
-      nodes: ["obie_logo", "quote_number"],
+      nodes: ["obie_logo", "blue_box", "red_box", "green_box"],
+      // nodes: ["obie_logo", "quote_number"],
       parentId: "root",
       styles: {
         padding: 16,
@@ -75,6 +118,7 @@ const template: Template = {
       },
     },
     quote_number: {
+      name: "Quote Number",
       id: "quote_number",
       type: "text",
       parentId: "header",
@@ -84,6 +128,7 @@ const template: Template = {
       },
     },
     obie_logo: {
+      name: "Obie Logo",
       id: "obie_logo",
       type: "image",
       parentId: "header",
@@ -95,12 +140,14 @@ const template: Template = {
       },
     },
     sections_container: {
+      name: "Sections Container",
       id: "sections_container",
       type: "view",
       nodes: ["sections"],
       parentId: "root",
     },
     sections: {
+      name: "Sections",
       id: "sections",
       key: "sections",
       type: "view",
@@ -111,12 +158,14 @@ const template: Template = {
       },
     },
     section_header: {
+      name: "Section Header",
       id: "section_header",
       type: "view",
       parentId: "sections",
       nodes: ["section_header_text"],
     },
     section_footer: {
+      name: "Section Footer",
       id: "section_footer",
       type: "view",
       parentId: "sections",
@@ -132,18 +181,21 @@ const template: Template = {
       nodes: ["section_footer_name", "section_footer_value"],
     },
     section_footer_value: {
+      name: "Section Footer Value",
       id: "section_footer_value",
       type: "text",
       parentId: "section_footer",
       key: "section_total",
     },
     section_footer_name: {
+      name: "Section Footer Name",
       id: "section_total",
       type: "text",
       parentId: "section_footer",
       key: "section_footer_name",
     },
     section_header_text: {
+      name: "Section Header Text",
       id: "section_header_text",
       type: "text",
       parentId: "section_header",
@@ -154,6 +206,7 @@ const template: Template = {
       },
     },
     section_rows: {
+      name: "Section Rows",
       id: "section_rows",
       key: "section_rows",
       type: "view",
@@ -170,6 +223,7 @@ const template: Template = {
       },
     },
     name: {
+      name: "Name",
       id: "name",
       type: "text",
       styles: {
@@ -177,6 +231,7 @@ const template: Template = {
       },
     },
     value: {
+      name: "Value",
       id: "name",
       type: "text",
       styles: {

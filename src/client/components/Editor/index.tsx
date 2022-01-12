@@ -23,7 +23,7 @@ export const Editor = ({ initialTemplate }: Props) => {
   return (
     <div className="w-full bg-black h-full flex">
       <LeftPanel />
-      <div className="w-2/3">
+      <div className="w-1/2">
         <MiddlePanel activeWindow={activeWindow} onWindowChange={setActiveWindow} />
       </div>
 
