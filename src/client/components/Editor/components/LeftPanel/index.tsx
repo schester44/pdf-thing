@@ -1,15 +1,41 @@
+import { useRef, useState } from "react";
+import { useRecoilValue } from "recoil";
+import { documentState } from "../../recoil/atoms";
 import { ComponentTree } from "../ComponentTree";
+import { CollapsiblePanel } from "../NodeEditor/CollapsiblePanel";
+
+const Logo = () => {
+  const template = useRecoilValue(documentState);
+
+  return (
+    <div className="h-12 flex items-center">
+      <div className="bg-indigo-500 h-full w-12 text-2xl mr-4 flex items-center justify-center">
+        O
+      </div>
+      <div className="text-xl text-white italic">{template.name}</div>
+    </div>
+  );
+};
 
 export const LeftPanel = () => {
+  const [width, setWidth] = useState(300);
+
   return (
-    <div className="w-1/4 bg-gray-900 h-screen overflow-hidden flex flex-col">
-      <div className="h-12">
-        <div className="bg-indigo-500 h-full w-12 text-2xl flex items-center justify-center">O</div>
-      </div>
+    <div className="bg-gray-900 h-screen overflow-hidden flex flex-col relative" style={{ width }}>
+      <Logo />
 
       <div className="pt-4 overflow-auto flex-1">
-        <ComponentTree />
+        <CollapsiblePanel title="Elements">
+          <ComponentTree />
+        </CollapsiblePanel>
       </div>
+
+      <div
+        className="absolute top-0 right-0 h-full w-1 bg-gray-900 hover:bg-gray-600 transition-colors ease-in-out delay-150"
+        style={{
+          cursor: "move",
+        }}
+      />
     </div>
   );
 };

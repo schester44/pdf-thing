@@ -15,15 +15,21 @@ type Props = { initialTemplate: Template };
 export const Editor = ({ initialTemplate }: Props) => {
   const [activeWindow, setActiveWindow] = useState("design");
   const loadDocument = useLoadDocument();
+  const [isLoaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    loadDocument(initialTemplate);
+    loadDocument(initialTemplate).then(() => {
+      setLoaded(true);
+    });
   }, [initialTemplate]);
+
+  if (!isLoaded) return <div>LOADING</div>;
 
   return (
     <div className="w-full bg-black h-full flex">
       <LeftPanel />
-      <div className="w-1/2">
+
+      <div className="flex-1">
         <MiddlePanel activeWindow={activeWindow} onWindowChange={setActiveWindow} />
       </div>
 

@@ -1,6 +1,7 @@
 import { useRecoilCallback } from "recoil";
 import { Node } from "../types";
-import { nodesState, totalNodeCountsState } from "./atoms";
+import { nodesState, selectedNodeState, totalNodeCountsState } from "./atoms";
+import { activeNodeSelector } from "./selectors";
 import { createNode } from "./utils/createPage";
 
 type NewNodeArgs = {
@@ -28,12 +29,14 @@ export function useNewNode() {
           [node.type]: counts[node.type] + 1,
         }));
 
+        set(selectedNodeState, node.id);
+
         set(nodesState(parentId), (parentNode) => {
           if (!parentNode) return parentNode;
 
           let position = positionInParent || (parentNode.nodes || []).length;
 
-          // tood: ugly syntax.. if  this is a view node then nodes should always  exist
+          // tood: ugly syntax.. if this is a view node then nodes should always exist
           return {
             ...parentNode,
             nodes: [

@@ -6,6 +6,7 @@ export default function EditorIndex({ initialTemplate }: { initialTemplate: Temp
 }
 
 const template: Template = {
+  name: "Obie Quote",
   pageIds: ["root"],
   nodes: {
     root: {
@@ -106,8 +107,7 @@ const template: Template = {
       name: "Header",
       id: "header",
       type: "view",
-      nodes: ["obie_logo", "blue_box", "red_box", "green_box"],
-      // nodes: ["obie_logo", "quote_number"],
+      nodes: ["obie_logo", "blue_box", "red_box"],
       parentId: "root",
       styles: {
         padding: 16,

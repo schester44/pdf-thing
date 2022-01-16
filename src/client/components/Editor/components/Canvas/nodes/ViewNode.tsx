@@ -28,14 +28,14 @@ export const ViewNode = ({ node, isSelected, isHoverOver }: BaseNodeProps) => {
   const createNode = useNewNode();
   const ref = useRef();
   const { scale } = useRecoilValue(localStorageState("scale"));
+  const dropIndex = useRef();
 
   const clearDropPlaceholder = useSetRecoilState(dropPlaceholderState);
 
   const setDropPlaceholder = useRecoilCallback(
     ({ snapshot, set }) =>
       ({ offsets, node, dom }: SetDropPlaceholderProps) => {
-        const willHaveHorizontalDropPlaceholders =
-          node.styles?.flexDirection === "column" || node.nodes?.length === 0;
+        const willHaveHorizontalDropPlaceholders = node.styles?.flexDirection === "column";
 
         const containerBox = dom.getBoundingClientRect();
 
@@ -121,17 +121,29 @@ export const ViewNode = ({ node, isSelected, isHoverOver }: BaseNodeProps) => {
               minDistance = distance;
               el = node;
               index = i;
+              dropIndex.current = pos === "right" ? index + 1 : index;
             }
           }
         });
 
+        const POSITIONER_SIZE = 2;
+
         if (el.box) {
-          set(dropPlaceholderState, {
-            height: containerBox.height,
-            width: 5,
-            x: pos === "left" ? el.box.x : el.box.x + el.box.width,
-            y: el.box.y,
-          });
+          const height = willHaveHorizontalDropPlaceholders ? POSITIONER_SIZE : containerBox.height;
+          const width = willHaveHorizontalDropPlaceholders ? containerBox.width : POSITIONER_SIZE;
+          const x = willHaveHorizontalDropPlaceholders
+            ? containerBox.left
+            : pos === "left"
+            ? el.box.x
+            : el.box.x + el.box.width;
+
+          const y = willHaveHorizontalDropPlaceholders
+            ? el.box.y + el.box.height
+            : containerBox.top;
+
+          const styles = { width, height, x, y };
+
+          set(dropPlaceholderState, styles);
         }
       },
     []
@@ -139,10 +151,9 @@ export const ViewNode = ({ node, isSelected, isHoverOver }: BaseNodeProps) => {
 
   const [collectedProps, drop] = useDrop<{ type: NodeI["type"] }, void, { isOver: boolean }>({
     accept: ["view", "image", "text"],
-    collect: async (monitor) => {
+    collect: (monitor) => {
       return {
-        someStuff: true,
-        isOver: monitor.isOver(),
+        isOver: monitor.isOver({ shallow: true }),
       };
     },
     hover: async (item, monitor) => {
@@ -168,6 +179,7 @@ export const ViewNode = ({ node, isSelected, isHoverOver }: BaseNodeProps) => {
       createNode({
         type: item.type,
         parentId: node.id,
+        positionInParent: dropIndex.current,
         styles: {
           backgroundColor: "pink",
         },

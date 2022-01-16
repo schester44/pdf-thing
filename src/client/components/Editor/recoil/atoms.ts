@@ -57,7 +57,7 @@ export const collapsedTreeNodesState = atom<string[]>({
 
 export const collapsedSettingsPanelState = atom<string[]>({
   key: "collapsedSettingsPanelState",
-  default: ["Layout"],
+  default: ["Layout", "Elements"],
 });
 
 export const selectedNodeState = atom<string | undefined>({

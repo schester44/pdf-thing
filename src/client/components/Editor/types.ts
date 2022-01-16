@@ -1,4 +1,5 @@
 export type Template = {
+  name: string;
   pageIds: Node["id"][];
   nodes: Record<string, Node>;
 };

@@ -52,18 +52,16 @@ type CanvasProps = {
 const Positioner = () => {
   const positioner = useRecoilValue(dropPlaceholderState);
 
-  console.log({ positioner });
   if (!positioner) return null;
 
   if (positioner.x === 0 && positioner.y === 0) return null;
 
   return (
     <div
-      className="bg-red fixed"
+      className="bg-red fixed transition-all pointer-events-none bg-green-500"
       style={{
         ...positioner,
         zIndex: 100,
-        background: "red",
         top: positioner.y,
         left: positioner.x,
       }}

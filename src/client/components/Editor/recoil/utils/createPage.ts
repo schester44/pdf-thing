@@ -18,11 +18,27 @@ export const createNode = ({
     type,
     parentId,
     name: name || `${type} ${id}`,
+    styles: {
+      opacity: 1,
+    },
   };
 
   if (node.type === "view") {
     node.nodes = [];
+
+    node.styles = defaultViewStyles();
   }
 
   return node;
+};
+
+const defaultViewStyles = () => {
+  return {
+    opacity: 1,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    textAlign: "left",
+  };
 };

@@ -12,7 +12,7 @@ export const CollapsiblePanel: React.FC<Props> = ({ title, children }) => {
   return (
     <div>
       <div
-        className="cursor-pointer bg-gray-800  flex items-center p-2 text-sm "
+        className="cursor-pointer bg-gray-800  flex items-center p-2 text-sm text-white"
         onClick={() => {
           setCollapsed(!isCollapsed);
         }}

@@ -1,5 +1,5 @@
 import { useRecoilCallback, useSetRecoilState } from "recoil";
-import { nodesState, pageIdsState, totalNodeCountsState } from "../atoms";
+import { documentState, nodesState, pageIdsState, totalNodeCountsState } from "../atoms";
 import { Template } from "../../types";
 
 export function useLoadDocument() {
@@ -7,6 +7,13 @@ export function useLoadDocument() {
 
   return useRecoilCallback(({ set }) => async (template: Template) => {
     setPageIds(template.pageIds);
+
+    set(documentState, (doc) => {
+      return {
+        ...doc,
+        name: template.name,
+      };
+    });
 
     let nodeCounts = {
       page: 0,

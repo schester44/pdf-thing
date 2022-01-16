@@ -17,8 +17,6 @@ export const Node = ({ id }: Props) => {
 
   const [isHoverOver, setHover] = useState(false);
 
-  console.log(node?.name, isVisible);
-
   if (!node || !isVisible) return null;
 
   const onMouseEnter = () => setHover(true);

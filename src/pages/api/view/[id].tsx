@@ -34,7 +34,7 @@ const template: Template = {
     "root-2": {
       id: "root-2",
       type: "page",
-      nodes: ["footer"],
+      nodes: ["header", "footer"],
     },
     root: {
       id: "root",

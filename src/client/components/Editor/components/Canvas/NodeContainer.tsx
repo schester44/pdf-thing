@@ -16,9 +16,7 @@ export const NodeContainer: React.FC<NodeContainerProps> = ({
     <>
       <div
         className={cn("w-full h-full absolute", {
-          "border-dashed border-2": isHoverOver && !isSelected && !isDragOver,
-          "border-dashed border-2 border-indigo-500": isDragOver && !isSelected,
-          "border-dashed border-2 ": isSelected,
+          "border-dashed border": isHoverOver || isSelected,
         })}
       />
 
