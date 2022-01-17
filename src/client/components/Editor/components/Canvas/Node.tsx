@@ -19,7 +19,9 @@ export const Node = ({ id }: Props) => {
 
   if (!node || !isVisible) return null;
 
-  const onMouseEnter = () => setHover(true);
+  const onMouseEnter = (e) => {
+    setHover(true);
+  };
   const onMouseLeave = () => setHover(false);
 
   const Component = nodeMap[node.type as keyof typeof nodeMap];

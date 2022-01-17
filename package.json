@@ -26,7 +26,7 @@
     "test:ci:client": "cypress run"
   },
   "dependencies": {
-    "@headlessui/react": "^1.4.1",
+    "@headlessui/react": "^1.4.3",
     "@nexus/schema": "^0.20.1",
     "@prisma/client": "3.1.1",
     "@react-pdf/renderer": "^2.0.21",
@@ -39,6 +39,7 @@
     "@types/micro-cors": "^0.1.2",
     "@types/mousetrap": "^1.6.8",
     "@types/pino": "^6.3.11",
+    "@types/react-resizable": "^1.7.4",
     "apollo-errors": "^1.9.0",
     "apollo-resolvers": "^1.4.2",
     "apollo-server": "^3.3.0",
@@ -75,6 +76,8 @@
     "react-icons": "^4.3.1",
     "react-modal-hook": "^3.0.0",
     "react-pdf-html": "^1.1.8",
+    "react-range": "^1.8.11",
+    "react-resizable": "^3.0.4",
     "react-simple-code-editor": "^0.11.0",
     "recoil": "^0.5.2",
     "reflect-metadata": "^0.1.13",

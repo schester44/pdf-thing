@@ -26,7 +26,7 @@ const getRelativePosition = ({ offsets, containerBox, scale }) => ({
 
 export const ViewNode = ({ node, isSelected, isHoverOver }: BaseNodeProps) => {
   const createNode = useNewNode();
-  const ref = useRef();
+  const ref = useRef(null);
   const { scale } = useRecoilValue(localStorageState("scale"));
   const dropIndex = useRef();
 
@@ -189,16 +189,10 @@ export const ViewNode = ({ node, isSelected, isHoverOver }: BaseNodeProps) => {
 
   return drop(
     <div>
-      <NodeContainer
-        // This  will probably change.. using this container to highlight the drop and selection state
-
-        isDragOver={collectedProps.isOver}
-        isHoverOver={isHoverOver}
-        isSelected={isSelected}
-      >
+      <NodeContainer isHoverOver={isHoverOver} isSelected={isSelected}>
         <div
           ref={ref}
-          style={node.styles}
+          style={{ ...node.styles, opacity: (node.styles?.opacity || 100) / 100 }}
           className={cn({
             "fixed bottom-0 left-0": node.props?.fixed,
             "p-4": !node.nodes?.length,

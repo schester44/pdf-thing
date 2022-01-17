@@ -10,27 +10,9 @@ import { RiAlignJustify, RiAlignLeft, RiAlignRight, RiAlignCenter } from "react-
 
 import { useRecoilState } from "recoil";
 import { nodesState } from "../../recoil/atoms";
+import { IconButton } from "../IconButton";
 
 type Props = { nodeId: Node["id"] };
-
-const IconButton: React.FC<{
-  isActive?: boolean;
-  className?: string;
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
-}> = ({ className, children, isActive, onClick }) => {
-  return (
-    <button
-      className={cn("bg-gray-700 hover:bg-gray-600 rounded p-1", {
-        [className as string]: !!className,
-        ["border border-transparent"]: !isActive && typeof isActive !== "undefined",
-        ["border border-indigo-600 text-indigo-400 hover:bg-gray-700 cursor-default"]: isActive,
-      })}
-      onClick={onClick}
-    >
-      {children}
-    </button>
-  );
-};
 
 export const LayoutSettings = ({ nodeId }: Props) => {
   const [node, setNodeState] = useRecoilState(nodesState(nodeId));

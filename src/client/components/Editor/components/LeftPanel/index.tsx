@@ -29,13 +29,6 @@ export const LeftPanel = () => {
           <ComponentTree />
         </CollapsiblePanel>
       </div>
-
-      <div
-        className="absolute top-0 right-0 h-full w-1 bg-gray-900 hover:bg-gray-600 transition-colors ease-in-out delay-150"
-        style={{
-          cursor: "move",
-        }}
-      />
     </div>
   );
 };

@@ -6,12 +6,17 @@ import { dropPlaceholderState, nodesState, selectedNodeState } from "../../recoi
 import { BiChevronDown, BiChevronRight } from "react-icons/bi";
 import { BsBox, BsImage } from "react-icons/bs";
 import { MdTextFields } from "react-icons/md";
+import { AiOutlineEllipsis } from "react-icons/ai";
+
 import { isActiveNode, isNodeVisible, isTreeNodeCollapsed } from "../../recoil/selectors";
-import { FiEye } from "react-icons/fi";
+import { FiDelete, FiEye, FiTrash, FiTrash2 } from "react-icons/fi";
 import { useDrag, useDrop } from "react-dnd";
 import { useNewNode } from "../../recoil/hooks";
 import { Node as NodeI } from "../../types";
 import { useMoveNode } from "../../recoil/hooks/useMoveNode";
+import { Dropdown, MenuItem } from "../Dropdown";
+import { Menu } from "@headlessui/react";
+import { useDeleteNode } from "../../recoil/hooks/useDeleteNode";
 
 type Props = {
   id: string;
@@ -32,6 +37,7 @@ export const TreeNode = ({ id, isParentHidden }: Props) => {
   const [isVisible, setVisibility] = useRecoilState(isNodeVisible(id));
   const createNode = useNewNode();
   const moveNode = useMoveNode();
+  const deleteNode = useDeleteNode();
 
   const isSelected = useRecoilValue(isActiveNode(id));
   const setSelected = useSetRecoilState(selectedNodeState);
@@ -107,7 +113,7 @@ export const TreeNode = ({ id, isParentHidden }: Props) => {
   return drag(
     drop(
       <div
-        className={cn("pt-1 text-white ", {
+        className={cn("pt-1 text-white", {
           "pl-2": isCollapsible,
           "pl-6": !isCollapsible,
           "bg-gray-800": collectedProps.isOver && collectedProps.canDrop,
@@ -116,7 +122,7 @@ export const TreeNode = ({ id, isParentHidden }: Props) => {
         <div className="flex items-center">
           {isCollapsible && (
             <div
-              className="pr-2 cursor-pointer"
+              className="pr-1 cursor-pointer"
               onClick={() => {
                 if (isCollapsible) {
                   setIsCollapsed(!isCollapsed);
@@ -127,42 +133,65 @@ export const TreeNode = ({ id, isParentHidden }: Props) => {
             </div>
           )}
 
-          <div className="flex items-center" onClick={() => setSelected(id)}>
-            {!isParentHidden && (
-              <FiEye
-                className={cn("text-xs mr-2 cursor-pointer", {
-                  "text-gray-200 hover:text-white": isVisible,
-                  "text-gray-400 hover:text-gray-400": !isVisible,
+          <div className="flex items-center justify-between flex-1" onClick={() => setSelected(id)}>
+            <div className="flex items-center">
+              <Icon
+                className={cn({
+                  "text-yellow-500": isSelected,
+                  "text-gray-300": !isSelected && isVisible,
+                  "text-gray-500": !isVisible,
                 })}
-                onClick={(e) => {
-                  e.stopPropagation();
-
-                  if (isVisible) {
-                    setIsCollapsed(true);
-                  }
-
-                  setVisibility(!isVisible);
-                }}
               />
-            )}
 
-            <Icon
-              className={cn({
-                "text-yellow-500": isSelected,
-                "text-gray-300": !isSelected && isVisible,
-                "text-gray-500": !isVisible,
-              })}
-            />
+              <span
+                className={cn("ml-2 hover:text-gray-100 cursor-pointer", {
+                  "text-gray-300": !isSelected && isVisible,
+                  "text-gray-500": !isVisible,
+                  "text-white": isSelected,
+                })}
+              >
+                {node.name}
+              </span>
+            </div>
 
-            <span
-              className={cn("ml-2 hover:text-gray-100 cursor-pointer", {
-                "text-gray-300": !isSelected && isVisible,
-                "text-gray-500": !isVisible,
-                "text-white": isSelected,
-              })}
-            >
-              {node.name}
-            </span>
+            <div className="pr-1 cursor-pointer">
+              <Dropdown
+                dropdownClassNames="w-32"
+                content={
+                  <>
+                    {!isParentHidden && (
+                      <MenuItem
+                        className="flex items-center"
+                        onClick={(e) => {
+                          e.stopPropagation();
+
+                          if (isVisible) {
+                            setIsCollapsed(true);
+                          }
+
+                          setVisibility(!isVisible);
+                        }}
+                      >
+                        <FiEye className="mr-2" /> {isVisible ? "Hide" : "Show"}
+                      </MenuItem>
+                    )}
+
+                    <MenuItem
+                      className="flex items-center"
+                      onClick={() => {
+                        deleteNode(node.id);
+                      }}
+                    >
+                      <FiTrash2 className="mr-2" /> Delete
+                    </MenuItem>
+                  </>
+                }
+              >
+                <Menu.Button className="rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-indigo-500 hover:text-white">
+                  <AiOutlineEllipsis className="hover:text-white" />
+                </Menu.Button>
+              </Dropdown>
+            </div>
           </div>
         </div>
 

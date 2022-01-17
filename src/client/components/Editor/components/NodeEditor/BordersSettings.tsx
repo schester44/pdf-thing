@@ -1,6 +1,6 @@
 import React from "react";
 import { Node } from "../../types";
-import { NumberInputWithSlider } from "../inputs/NumberInput";
+import { NumberInputWithSlider } from "../inputs/NumberInputWithSlider";
 import { CollapsiblePanel } from "./CollapsiblePanel";
 import { PanelSection } from "./CollapsiblePanel/PanelSection";
 import { Setting } from "./CollapsiblePanel/Setting";

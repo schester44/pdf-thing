@@ -10,11 +10,11 @@ export const NodeEditor = () => {
   if (!activeNode) return <div>No active node</div>;
 
   if (activeNode.type === "text") {
-    return <TextTools node={activeNode} />;
+    return <TextTools nodeId={activeNode.id} />;
   }
 
   if (activeNode.type === "image") {
-    return <ImageTools node={activeNode} />;
+    return <ImageTools nodeId={activeNode.id} />;
   }
 
   if (activeNode.type === "view") {

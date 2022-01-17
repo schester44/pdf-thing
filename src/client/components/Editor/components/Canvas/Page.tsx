@@ -50,7 +50,7 @@ export const Page = ({ id, width, height, scale }: Props) => {
   return drop(
     <div
       data-type="page"
-      className={cn("rounded-lg bg-white overflow-hidden shadow", {
+      className={cn("rounded-lg bg-white overflow-hidden shadow-lg", {
         "shadow-green-400": collectedProps.isOver,
         "border-white": !collectedProps.isOver,
       })}

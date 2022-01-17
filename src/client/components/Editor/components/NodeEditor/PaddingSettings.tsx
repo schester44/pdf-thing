@@ -1,18 +1,16 @@
+import React from "react";
 import { Node } from "../../types";
 import { NumberInputWithSlider } from "../inputs/NumberInputWithSlider";
 import { CollapsiblePanel } from "./CollapsiblePanel";
+import { PanelSection } from "./CollapsiblePanel/PanelSection";
 import { Setting } from "./CollapsiblePanel/Setting";
 
 type Props = { nodeId: Node["id"] };
 
-export const EffectsSettings = ({ nodeId }: Props) => {
+export const PaddingSettings = ({ nodeId }: Props) => {
   return (
-    <CollapsiblePanel title="Effects">
-      <div className="p-3">
-        <Setting name="Opacity">
-          <NumberInputWithSlider nodeId={nodeId} valueKey="opacity" min="0" max="100" step="1" />
-        </Setting>
-      </div>
+    <CollapsiblePanel title="Margins & Padding">
+      <div className="p-3">xx</div>
     </CollapsiblePanel>
   );
 };
