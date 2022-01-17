@@ -10,7 +10,7 @@ export const MenuItem: React.FC<{ onClick?: (e: any) => void; className?: string
   return (
     <Menu.Item onClick={onClick}>
       <span
-        className={cn("text-gray-900 hover:bg-gray-100 px-4 py-2 text-xs block", {
+        className={cn("text-gray-900 hover:bg-gray-100 px-4 py-2 text-xs block cursor-pointer", {
           [className]: !!className,
         })}
       >

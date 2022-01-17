@@ -70,6 +70,7 @@
     "postcss": "^8.3.8",
     "prismjs": "^1.26.0",
     "react": "^18.0.0-alpha-4298ddbc5-20211023",
+    "react-colorful": "^5.5.1",
     "react-dnd": "^14.0.5",
     "react-dnd-html5-backend": "^14.1.0",
     "react-dom": "^18.0.0-alpha-4298ddbc5-20211023",
