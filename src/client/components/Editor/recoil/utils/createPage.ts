@@ -19,7 +19,7 @@ export const createNode = ({
     parentId,
     name: name || `${type} ${id}`,
     styles: {
-      opacity: 1,
+      opacity: 100,
     },
   };
 
@@ -34,7 +34,7 @@ export const createNode = ({
 
 const defaultViewStyles = () => {
   return {
-    opacity: 1,
+    opacity: 100,
     display: "flex",
     flexDirection: "row",
     justifyContent: "flex-start",

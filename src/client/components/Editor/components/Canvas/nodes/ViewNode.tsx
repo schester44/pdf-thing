@@ -12,6 +12,7 @@ import {
   localStorageState,
   nodesState,
 } from "@client/components/Editor/recoil/atoms";
+import { marginStyles } from "../utils/marginStyles";
 
 type SetDropPlaceholderProps = {
   offsets: { x: number; y: number };
@@ -192,7 +193,11 @@ export const ViewNode = ({ node, isSelected, isHoverOver }: BaseNodeProps) => {
       <NodeContainer isHoverOver={isHoverOver} isSelected={isSelected}>
         <div
           ref={ref}
-          style={{ ...node.styles, opacity: (node.styles?.opacity || 100) / 100 }}
+          style={{
+            ...node.styles,
+            ...marginStyles(node),
+            opacity: (node.styles?.opacity || 100) / 100,
+          }}
           className={cn({
             "fixed bottom-0 left-0": node.props?.fixed,
             "p-4": !node.nodes?.length,

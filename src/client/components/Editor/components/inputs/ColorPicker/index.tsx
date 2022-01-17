@@ -13,7 +13,7 @@ export const ColorPicker: React.FC<Props> = ({ value, onChange }) => {
     <div>
       <Popover className="relative">
         <Popover.Button>
-          <div className="rounded-lg w-12 h-6" style={{ background: value || "white" }} />
+          <div className="rounded-lg w-12 h-6 border border-gray-700" style={{ background: value || "white" }} />
         </Popover.Button>
         <Transition
           as={Fragment}

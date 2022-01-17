@@ -202,7 +202,6 @@ const template: Template = {
       styles: {
         fontWeight: "bold",
         color: "rgb(100,54,251)",
-        padding: 8,
       },
     },
     section_rows: {

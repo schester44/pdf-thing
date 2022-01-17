@@ -46,7 +46,7 @@ export const MetaSettings = ({ nodeId }: Props) => {
 
                 return {
                   ...node,
-                  key: e.target.value,
+                  key: e.target.value.trim().replace(".", ""),
                 };
               });
             }}
