@@ -9,10 +9,18 @@ export const TextNode = ({ node, isSelected, isHoverOver }: BaseNodeProps) => {
         style={{
           ...node.styles,
           ...marginStyles(node),
-          opacity: (node.styles?.opacity || 100) / 100,
+          opacity: (node.styles?.opacity ?? 100) / 100,
         }}
       >
-        {node.text || <span>{node.name}</span>}
+        {node.text || node.key ? (
+          <span>
+            {"{{"}
+            {node.key}
+            {"}}"}
+          </span>
+        ) : (
+          <span>{node.name}</span>
+        )}
       </p>
     </NodeContainer>
   );

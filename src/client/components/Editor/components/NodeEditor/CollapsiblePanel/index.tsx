@@ -17,11 +17,11 @@ export const CollapsiblePanel: React.FC<Props> = ({ title, children }) => {
           setCollapsed(!isCollapsed);
         }}
       >
-        <span className="pr-2">{!isCollapsed ? <FiChevronRight /> : <FiChevronDown />}</span>
+        <span className="pr-2">{isCollapsed ? <FiChevronRight /> : <FiChevronDown />}</span>
         <span>{title}</span>
       </div>
 
-      {isCollapsed && <div>{children}</div>}
+      {!isCollapsed && <div>{children}</div>}
     </div>
   );
 };

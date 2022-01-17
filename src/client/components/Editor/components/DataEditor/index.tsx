@@ -2,27 +2,24 @@ import React from "react";
 import Editor from "react-simple-code-editor";
 import { highlight, languages } from "prismjs/components/prism-core";
 import "prismjs/components/prism-json";
-import { useRecoilValue } from "recoil";
-import { pageIdsState } from "../../recoil/atoms";
 
-const code = `{ "json": true, "valid": true }`;
+const code = `{
+  "section": [{ "section_rows": [{ "name": "Registration Name", "value": "418282" }] }],
+  "valid": true,
+}`;
 
+// TODO: We need to leverage code in `getInitialPayload` to set the initial value of the editor.
+// How do we get ALL nodes? do we need to use a nodeIdsState and fetch all nodes?
 export const DataEditor = () => {
-  const pageIds = useRecoilValue(pageIdsState);
+  const [payload, setPayload] = React.useState(() => {
+    return code;
+  });
 
-  // TODO: Validate JSON show message on error
-  // Theme
-  // Update with new JSON when JSON changes
-  // how to save existing inputted data when this component unmounts
-  // auto format the nodes
-  
   return (
     <div className="bg-black text-white h-full">
       <Editor
-        value={code}
-        onValueChange={(code) => {
-          console.log({ code });
-        }}
+        value={payload}
+        onValueChange={setPayload}
         highlight={(code: any) => highlight(code, languages.json)}
         padding={16}
         style={{

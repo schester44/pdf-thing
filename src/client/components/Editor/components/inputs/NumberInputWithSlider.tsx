@@ -9,12 +9,14 @@ export const NumberInputWithSlider = ({
   max,
   step,
   valueKey,
+  defaultValue,
   nodeId,
 }: {
   min?: string;
   max?: string;
   step?: string;
   valueKey: string;
+  defaultValue?: number;
   nodeId: Node["id"];
 }) => {
   const [node, setNodeState] = useRecoilState(nodesState(nodeId));
@@ -23,7 +25,7 @@ export const NumberInputWithSlider = ({
 
   const styles = node.styles || {};
 
-  const value = styles[valueKey as keyof typeof styles];
+  const value = styles[valueKey as keyof typeof styles] ?? defaultValue;
 
   const handleChange = (value: number) => {
     setNodeState((node) => {

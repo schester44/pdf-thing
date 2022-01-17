@@ -42,8 +42,6 @@ export const PaddingSettings = ({ nodeId }: Props) => {
     });
   };
 
-  console.log(node.styles);
-
   return (
     <CollapsiblePanel title="Margins & Padding">
       <div className="p-2 h-60">

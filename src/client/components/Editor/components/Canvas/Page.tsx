@@ -1,4 +1,5 @@
 import cn from "classnames";
+import { useState } from "react";
 import { useDrop } from "react-dnd";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { nodesState } from "../../recoil/atoms";
@@ -24,6 +25,7 @@ type DroppedItem = {
 export const Page = ({ id, width, height, scale }: Props) => {
   const page = useRecoilValue(nodesState(id));
   const createNode = useNewNode();
+  const [hoveredNode, setHoveredNode] = useState();
 
   const [collectedProps, drop] = useDrop<DroppedItem, void, CollectedProps>({
     accept: ["view", "image", "text"],
@@ -71,7 +73,15 @@ export const Page = ({ id, width, height, scale }: Props) => {
         <div className="page">
           {page.nodes &&
             page.nodes.map((nodeId) => {
-              return <Node id={nodeId} key={nodeId} />;
+              return (
+                <Node
+                  id={nodeId}
+                  key={nodeId}
+                  isHovering={nodeId === hoveredNode}
+                  onMouseEnter={() => setHoveredNode(nodeId)}
+                  onMousLeave={() => setHoveredNode(undefined)}
+                />
+              );
             })}
         </div>
       </div>

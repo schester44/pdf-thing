@@ -8,7 +8,7 @@ export const ComponentTree = () => {
   return (
     <div>
       {pageIds.map((pageId) => {
-        return <TreeNode id={pageId} key={pageId} depth={0} />;
+        return <TreeNode id={pageId} key={pageId} />;
       })}
     </div>
   );

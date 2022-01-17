@@ -36,6 +36,7 @@ export const TypographySettings = ({ nodeId }: Props) => {
     <CollapsiblePanel title="Typography">
       <PanelSection title="Style">
         <Setting name="Font">
+          use select here, not dropdown
           <Dropdown
             dropdownClassNames="w-full"
             content={

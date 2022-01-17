@@ -4,4 +4,6 @@ export type BaseNodeProps = {
   node: Node;
   isSelected: boolean;
   isHoverOver: boolean;
+  onMouseEnter: () => void;
+  onMouseLeave: () => void;
 };

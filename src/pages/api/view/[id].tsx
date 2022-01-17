@@ -222,7 +222,7 @@ const payload: Payload = {
       section_header_text: "Munich Information",
       section_rows: [
         {
-          name: "Insured Name",
+          name: "ANYTHING GOEZZZ HERE",
           value: "John Doe",
         },
         {

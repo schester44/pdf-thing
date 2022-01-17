@@ -55,27 +55,51 @@ export const MetaSettings = ({ nodeId }: Props) => {
       </div>
 
       {isViewNode && (
-        <div className="px-3 pb-2">
-          <Setting name="Fixed">
-            <input
-              type="checkbox"
-              value={node.props?.fixed || false}
-              onChange={(e) => {
-                setNodeState((node) => {
-                  if (!node) return node;
+        <>
+          <div className="px-3">
+            <Setting name="Fixed">
+              <input
+                type="checkbox"
+                value={node.props?.fixed || false}
+                onChange={(e) => {
+                  setNodeState((node) => {
+                    if (!node) return node;
 
-                  return {
-                    ...node,
-                    props: {
-                      ...node.props,
-                      fixed: e.target.checked,
-                    },
-                  };
-                });
-              }}
-            />
-          </Setting>
-        </div>
+                    return {
+                      ...node,
+                      props: {
+                        ...node.props,
+                        fixed: e.target.checked,
+                      },
+                    };
+                  });
+                }}
+              />
+            </Setting>
+          </div>
+
+          <div className="px-3 pb-2">
+            <Setting name="Repeats">
+              <input
+                type="checkbox"
+                value={node.props?.repeats || false}
+                onChange={(e) => {
+                  setNodeState((node) => {
+                    if (!node) return node;
+
+                    return {
+                      ...node,
+                      props: {
+                        ...node.props,
+                        repeats: e.target.checked,
+                      },
+                    };
+                  });
+                }}
+              />
+            </Setting>
+          </div>
+        </>
       )}
     </CollapsiblePanel>
   );

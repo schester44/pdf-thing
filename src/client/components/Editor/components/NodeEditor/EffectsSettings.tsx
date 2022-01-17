@@ -10,7 +10,14 @@ export const EffectsSettings = ({ nodeId }: Props) => {
     <CollapsiblePanel title="Effects">
       <div className="p-3">
         <Setting name="Opacity">
-          <NumberInputWithSlider nodeId={nodeId} valueKey="opacity" min="0" max="100" step="1" />
+          <NumberInputWithSlider
+            defaultValue={100}
+            nodeId={nodeId}
+            valueKey="opacity"
+            min="0"
+            max="100"
+            step="1"
+          />
         </Setting>
       </div>
     </CollapsiblePanel>

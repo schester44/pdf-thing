@@ -50,6 +50,11 @@ export const nodesState = atomFamily<Node | undefined, string>({
   default: undefined,
 });
 
+export const nodeIdsState = atomFamily({
+  key: "nodeIdsState",
+  default: [],
+});
+
 export const collapsedTreeNodesState = atom<string[]>({
   key: "collapsedTreeNodesState",
   default: [],
@@ -57,7 +62,7 @@ export const collapsedTreeNodesState = atom<string[]>({
 
 export const collapsedSettingsPanelState = atom<string[]>({
   key: "collapsedSettingsPanelState",
-  default: ["Layout", "Elements"],
+  default: ["Margins & Padding", "Borders", "Effects", "Size"],
 });
 
 export const selectedNodeState = atom<string | undefined>({

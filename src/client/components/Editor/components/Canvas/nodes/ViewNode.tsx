@@ -25,7 +25,15 @@ const getRelativePosition = ({ offsets, containerBox, scale }) => ({
   y: (offsets.y - containerBox.y) / scale,
 });
 
-export const ViewNode = ({ node, isSelected, isHoverOver }: BaseNodeProps) => {
+export const ViewNode = ({
+  node,
+  isSelected,
+  isHoverOver,
+
+  // onMouseEnter and onMouseLeave are for recursively updating the parent Node's `isChildHovering` state for displaying the hover placeholder
+  onMouseEnter,
+  onMouseLeave,
+}: BaseNodeProps) => {
   const createNode = useNewNode();
   const ref = useRef(null);
   const { scale } = useRecoilValue(localStorageState("scale"));
@@ -190,24 +198,29 @@ export const ViewNode = ({ node, isSelected, isHoverOver }: BaseNodeProps) => {
 
   return drop(
     <div>
-      <NodeContainer isHoverOver={isHoverOver} isSelected={isSelected}>
-        <div
-          ref={ref}
-          style={{
-            ...node.styles,
-            ...marginStyles(node),
-            opacity: (node.styles?.opacity || 100) / 100,
-          }}
-          className={cn({
-            "fixed bottom-0 left-0": node.props?.fixed,
-            "p-4": !node.nodes?.length,
-          })}
-        >
+      <div
+        ref={ref}
+        style={{
+          ...node.styles,
+          ...marginStyles(node),
+          opacity: (node.styles?.opacity ?? 100) / 100,
+        }}
+        className={cn({
+          "fixed bottom-0 left-0": node.props?.fixed,
+          "p-4": !node.nodes?.length,
+        })}
+      >
+        <NodeContainer isHoverOver={isHoverOver} isSelected={isSelected}>
           {node.nodes?.map((nodeId) => (
-            <Node id={nodeId} key={nodeId} />
+            <Node
+              id={nodeId}
+              key={nodeId}
+              onMouseEnter={onMouseEnter}
+              onMouseLeave={onMouseLeave}
+            />
           ))}
-        </div>
-      </NodeContainer>
+        </NodeContainer>
+      </div>
     </div>
   );
 };

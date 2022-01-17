@@ -5,12 +5,19 @@ import { CollapsiblePanel } from "./CollapsiblePanel";
 import { PanelSection } from "./CollapsiblePanel/PanelSection";
 import { Setting } from "./CollapsiblePanel/Setting";
 import { TiMediaPauseOutline, TiEqualsOutline } from "react-icons/ti";
-import { BsAlignStart, BsAlignCenter, BsAlignEnd } from "react-icons/bs";
+import { BsAlignStart, BsAlignEnd, BsAlignTop, BsAlignBottom } from "react-icons/bs";
 import { RiAlignJustify, RiAlignLeft, RiAlignRight, RiAlignCenter } from "react-icons/ri";
+import { CgDisplayFlex } from "react-icons/cg";
+import { AiOutlinePicCenter } from "react-icons/ai";
 
 import { useRecoilState } from "recoil";
 import { nodesState } from "../../recoil/atoms";
 import { IconButton } from "../IconButton";
+import {
+  MdAlignHorizontalCenter,
+  MdAlignVerticalCenter,
+  MdOutlineAlignHorizontalCenter,
+} from "react-icons/md";
 
 type Props = { nodeId: Node["id"] };
 
@@ -56,7 +63,62 @@ export const LayoutSettings = ({ nodeId }: Props) => {
             <TiEqualsOutline className="text-lg" />
           </IconButton>
         </Setting>
-        <Setting name="Justify"></Setting>
+        <Setting name="Justify">
+          <IconButton
+            className="mr-2"
+            isActive={styles.justifyContent === "flex-start"}
+            onClick={() => {
+              setStyle({ justifyContent: "flex-start" });
+            }}
+          >
+            {styles.flexDirection === "column" ? <BsAlignTop /> : <BsAlignStart />}
+          </IconButton>
+
+          <IconButton
+            className="mr-2"
+            isActive={styles.justifyContent === "center"}
+            onClick={() => {
+              setStyle({ justifyContent: "center" });
+            }}
+          >
+            {styles.flexDirection === "column" ? (
+              <MdAlignVerticalCenter />
+            ) : (
+              <MdAlignHorizontalCenter />
+            )}
+          </IconButton>
+
+          <IconButton
+            className="mr-2"
+            isActive={styles.justifyContent === "flex-end"}
+            onClick={() => {
+              setStyle({ justifyContent: "flex-end" });
+            }}
+          >
+            {styles.flexDirection === "column" ? <BsAlignBottom /> : <BsAlignEnd />}
+          </IconButton>
+
+          <IconButton
+            className="mr-2"
+            isActive={styles.justifyContent === "space-between"}
+            onClick={() => {
+              setStyle({ justifyContent: "space-between" });
+            }}
+          >
+            <CgDisplayFlex className={styles.flexDirection === "column" ? "rotate-90" : ""} />
+          </IconButton>
+
+          <IconButton
+            className="mr-2"
+            isActive={styles.justifyContent === "space-around"}
+            onClick={() => {
+              setStyle({ justifyContent: "space-around" });
+            }}
+          >
+            <AiOutlinePicCenter className={styles.flexDirection === "column" ? "" : "rotate-90"} />
+          </IconButton>
+        </Setting>
+
         <Setting name="Align">
           <IconButton
             className="mr-2"
@@ -65,7 +127,7 @@ export const LayoutSettings = ({ nodeId }: Props) => {
               setStyle({ alignItems: "flex-start" });
             }}
           >
-            <BsAlignStart />
+            {styles.flexDirection === "column" ? <BsAlignStart /> : <BsAlignTop />}
           </IconButton>
 
           <IconButton
@@ -75,7 +137,11 @@ export const LayoutSettings = ({ nodeId }: Props) => {
               setStyle({ alignItems: "center" });
             }}
           >
-            <BsAlignCenter />
+            {styles.flexDirection === "column" ? (
+              <MdAlignHorizontalCenter />
+            ) : (
+              <MdAlignVerticalCenter />
+            )}
           </IconButton>
 
           <IconButton
@@ -85,7 +151,7 @@ export const LayoutSettings = ({ nodeId }: Props) => {
               setStyle({ alignItems: "flex-end" });
             }}
           >
-            <BsAlignEnd />
+            {styles.flexDirection === "column" ? <BsAlignEnd /> : <BsAlignBottom />}
           </IconButton>
         </Setting>
       </PanelSection>

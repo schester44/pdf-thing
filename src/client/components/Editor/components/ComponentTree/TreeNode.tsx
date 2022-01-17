@@ -9,7 +9,7 @@ import { MdTextFields } from "react-icons/md";
 import { AiOutlineEllipsis } from "react-icons/ai";
 
 import { isActiveNode, isNodeVisible, isTreeNodeCollapsed } from "../../recoil/selectors";
-import { FiDelete, FiEye, FiTrash, FiTrash2 } from "react-icons/fi";
+import { FiEye, FiTrash2 } from "react-icons/fi";
 import { useDrag, useDrop } from "react-dnd";
 import { useNewNode } from "../../recoil/hooks";
 import { Node as NodeI } from "../../types";
@@ -20,7 +20,7 @@ import { useDeleteNode } from "../../recoil/hooks/useDeleteNode";
 
 type Props = {
   id: string;
-  isParentHidden: boolean;
+  isParentHidden?: boolean;
 };
 
 const icons = {
@@ -31,7 +31,7 @@ const icons = {
   page_number: MdTextFields,
 };
 
-export const TreeNode = ({ id, isParentHidden }: Props) => {
+export const TreeNode = ({ id, isParentHidden = false }: Props) => {
   const node = useRecoilValue(nodesState(id));
   const [isCollapsed, setIsCollapsed] = useRecoilState(isTreeNodeCollapsed(id));
   const [isVisible, setVisibility] = useRecoilState(isNodeVisible(id));
@@ -69,7 +69,7 @@ export const TreeNode = ({ id, isParentHidden }: Props) => {
     canDrop: () => {
       invariant(node);
 
-      return node.type === "view";
+      return node.type === "view" || node.type === "page";
     },
     drop: (item, monitor) => {
       const didDrop = monitor.didDrop();
@@ -154,7 +154,7 @@ export const TreeNode = ({ id, isParentHidden }: Props) => {
               </span>
             </div>
 
-            <div className="pr-1 cursor-pointer">
+            <div className="pr-2 cursor-pointer">
               <Dropdown
                 dropdownClassNames="w-32"
                 content={
