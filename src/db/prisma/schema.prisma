@@ -27,11 +27,35 @@ model ProjectUsers {
 }
 
 model Project {
-  id                String         @id @default(uuid())
+  id                String            @id @default(uuid())
   name              String
   users             ProjectUsers[]
   externalBillingId String?
   subscriptions     Subscription[]
+  ProjectAPIKey     ProjectAPIKey[]
+  ProjectTemplate   ProjectTemplate[]
+}
+
+model ProjectAPIKey {
+  id        String   @id @default(uuid())
+  project   Project  @relation(fields: [projectId], references: [id])
+  projectId String
+  key       String
+  createdAt DateTime @default(now())
+
+  @@map(name: "api_keys")
+}
+
+model ProjectTemplate {
+  id        String   @id @default(uuid())
+  project   Project  @relation(fields: [projectId], references: [id])
+  projectId String
+  name      String
+  createdAt DateTime @default(now())
+  data      Json
+  key       String
+
+  @@map(name: "templates")
 }
 
 model Session {
@@ -67,10 +91,10 @@ model UserInvites {
   id              Int      @id @default(autoincrement())
   user            User     @relation("user", fields: [userId], references: [id])
   createdAt       DateTime @default(now()) @map(name: "created_at")
-  userId          Int
+  userId          Int      @unique
   projectId       String
   accepted        Boolean  @default(false)
-  invitedByUserId Int
+  invitedByUserId Int      @unique
   invitedBy       User     @relation("invitedBy", fields: [invitedByUserId], references: [id])
 
 

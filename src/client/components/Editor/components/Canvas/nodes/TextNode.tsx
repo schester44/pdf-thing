@@ -12,14 +12,14 @@ export const TextNode = ({ node, isSelected, isHoverOver }: BaseNodeProps) => {
           opacity: (node.styles?.opacity ?? 100) / 100,
         }}
       >
-        {node.text || node.key ? (
+        {node.key ? (
           <span>
             {"{{"}
             {node.key}
             {"}}"}
           </span>
         ) : (
-          <span>{node.name}</span>
+          node.text || <span>{node.name}</span>
         )}
       </p>
     </NodeContainer>

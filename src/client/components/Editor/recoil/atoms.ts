@@ -50,7 +50,7 @@ export const nodesState = atomFamily<Node | undefined, string>({
   default: undefined,
 });
 
-export const nodeIdsState = atomFamily({
+export const nodeIdsState = atom<string[]>({
   key: "nodeIdsState",
   default: [],
 });

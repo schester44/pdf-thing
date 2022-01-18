@@ -1,5 +1,11 @@
 import { useRecoilCallback, useSetRecoilState } from "recoil";
-import { documentState, nodesState, pageIdsState, totalNodeCountsState } from "../atoms";
+import {
+  documentState,
+  nodeIdsState,
+  nodesState,
+  pageIdsState,
+  totalNodeCountsState,
+} from "../atoms";
 import { Template } from "../../types";
 
 export function useLoadDocument() {
@@ -24,6 +30,8 @@ export function useLoadDocument() {
     };
 
     const nodeIds = Object.keys(template.nodes);
+
+    set(nodeIdsState, nodeIds);
 
     nodeIds.forEach((nodeId) => {
       const node = template.nodes[nodeId];

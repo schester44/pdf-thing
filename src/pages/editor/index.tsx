@@ -152,6 +152,7 @@ const template: Template = {
       key: "sections",
       type: "view",
       nodes: ["section_header", "section_rows", "section_footer"],
+      props: { repeats: true },
       parentId: "root",
       styles: {
         marginBottom: 16,
@@ -205,6 +206,7 @@ const template: Template = {
       },
     },
     section_rows: {
+      props: { repeats: true },
       name: "Section Rows",
       id: "section_rows",
       key: "section_rows",
@@ -225,6 +227,8 @@ const template: Template = {
       name: "Name",
       id: "name",
       type: "text",
+      key: "name",
+      parentId: "section_rows",
       styles: {
         fontSize: 12,
       },
@@ -233,6 +237,8 @@ const template: Template = {
       name: "Value",
       id: "name",
       type: "text",
+      key: "value",
+      parentId: "section_rows",
       styles: {
         fontSize: 12,
         fontFamily: "Helvetica-Bold",
