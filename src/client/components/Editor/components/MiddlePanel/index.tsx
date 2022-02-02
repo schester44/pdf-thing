@@ -1,4 +1,6 @@
 import cn from "classnames";
+import { BiLayout } from "react-icons/bi";
+import { CgDatabase } from "react-icons/cg";
 import { CanvasContainer as Canvas } from "../Canvas";
 import { DataEditor } from "../DataEditor";
 
@@ -20,31 +22,36 @@ export const MiddlePanel = ({ activeWindow, onWindowChange }: Props) => {
   );
 };
 
+const PanelButton: React.FC<{ isActive: boolean; onClick: () => void }> = ({
+  children,
+  isActive,
+  onClick,
+}) => {
+  return (
+    <div
+      onClick={onClick}
+      className={cn("flex items-center px-3 py-2 text-xs rounded font-semibold", {
+        "bg-white shadow text-gray-800": isActive,
+        "cursor-pointer text-gray-600": !isActive,
+      })}
+    >
+      {children}
+    </div>
+  );
+};
+
 const Toolbar = ({ activeWindow, onWindowChange }: Props) => {
   return (
-    <div className="bg-gray-900 flex justify-between">
-      <div></div>
+    <div className=" flex justify-center py-4">
       <div className="flex">
-        <div
-          onClick={() => onWindowChange("design")}
-          className={cn("flex items-center justify-center text-white p-3 border-t-2 text-sm", {
-            "border-indigo-500 bg-gray-800": activeWindow === "design",
-            "cursor-pointer border-gray-900": activeWindow !== "design",
-          })}
-        >
-          Design
-        </div>
-        <div
-          onClick={() => onWindowChange("data")}
-          className={cn("flex items-center justify-center text-white p-3 border-t-2  text-sm", {
-            "border-indigo-500 bg-gray-800": activeWindow === "data",
-            "cursor-pointer border-gray-900 ": activeWindow !== "data",
-          })}
-        >
-          Sample Data
-        </div>
+        <PanelButton isActive={activeWindow === "design"} onClick={() => onWindowChange("design")}>
+          <BiLayout className="text-lg mr-1" /> Design
+        </PanelButton>
+
+        <PanelButton isActive={activeWindow === "data"} onClick={() => onWindowChange("data")}>
+          <CgDatabase className="text-lg mr-1" /> Sample Data
+        </PanelButton>
       </div>
-      <div></div>
     </div>
   );
 };

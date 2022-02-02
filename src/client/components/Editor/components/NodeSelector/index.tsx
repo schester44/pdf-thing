@@ -28,7 +28,7 @@ const NodeTypeButton = ({ type }: { type: Node["type"] }) => {
   const Icon = iconMap[type as keyof typeof iconMap];
 
   return drag(
-    <div className="p-3 border-l border-r border-gray-800 flex items-center justify-center cursor-move hover:bg-gray-800">
+    <div className="p-2 flex items-center justify-center cursor-move hover:text-gray-900 transition-colors  rounded-lg hover:bg-white">
       <Icon />
     </div>
   );
@@ -36,7 +36,7 @@ const NodeTypeButton = ({ type }: { type: Node["type"] }) => {
 
 export const NodeSelector = () => {
   return (
-    <div className="bg-gray-900 absolute text-white flex text-xl overflow-hidden z-50">
+    <div className="absolute text-gray-600 flex text-lg overflow-hidden z-50 mt-4 ml-4">
       <NodeTypeButton type="view" />
       <NodeTypeButton type="text" />
       <NodeTypeButton type="image" />

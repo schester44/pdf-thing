@@ -118,7 +118,7 @@ export const TreeNode = ({ id, isParentHidden = false }: Props) => {
   return drag(
     drop(
       <div
-        className={cn("pt-1 text-white", {
+        className={cn("pt-1 text-gray-900", {
           "pl-2": isCollapsible,
           "pl-6": !isCollapsible,
           "bg-gray-800": collectedProps.isOver && collectedProps.canDrop,
@@ -142,17 +142,17 @@ export const TreeNode = ({ id, isParentHidden = false }: Props) => {
             <div className="flex items-center">
               <Icon
                 className={cn({
-                  "text-yellow-500": isSelected,
-                  "text-gray-300": !isSelected && isVisible,
-                  "text-gray-500": !isVisible,
+                  "text-indigo-500": isSelected,
+                  "text-gray-500": !isSelected && isVisible,
+                  "text-gray-300": !isVisible,
                 })}
               />
 
               <span
-                className={cn("ml-2 hover:text-gray-100 cursor-pointer", {
-                  "text-gray-300": !isSelected && isVisible,
-                  "text-gray-500": !isVisible,
-                  "text-white": isSelected,
+                className={cn("ml-2 ", {
+                  "text-gray-500 hover:text-gray-800 cursor-pointer": !isSelected && isVisible,
+                  "text-gray-200": !isVisible,
+                  "text-gray-800": isSelected,
                 })}
               >
                 {node.name}
@@ -192,8 +192,8 @@ export const TreeNode = ({ id, isParentHidden = false }: Props) => {
                   </>
                 }
               >
-                <Menu.Button className="rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-indigo-500 hover:text-white">
-                  <AiOutlineEllipsis className="hover:text-white" />
+                <Menu.Button className="rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 hover:text-gray-800 text-gray-400">
+                  <AiOutlineEllipsis />
                 </Menu.Button>
               </Dropdown>
             </div>
@@ -201,7 +201,7 @@ export const TreeNode = ({ id, isParentHidden = false }: Props) => {
         </div>
 
         {node.nodes && !isCollapsed && (
-          <div className="ml-2 pl-1 border-l border-gray-600">
+          <div className="ml-2 pl-1 border-l border-gray-100">
             {node.nodes.map((nodeId) => {
               return (
                 <TreeNode key={nodeId} id={nodeId} isParentHidden={isParentHidden || !isVisible} />

@@ -1,12 +1,12 @@
 import { Project, ProjectUsers } from "@client/graphql/types.generated";
+import { Menu } from "@headlessui/react";
 import { Fragment } from "react";
 import { BiCog, BiHomeSmile } from "react-icons/bi";
-import { AiOutlineShop } from "react-icons/ai";
+import { RiLayoutMasonryLine } from "react-icons/ri";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
+import { BsLayoutWtf } from "react-icons/bs";
 import NavMenuItem from "./MenuItem";
 import ProjectDropdown from "./ProjectDropdown";
-import { Menu } from "@headlessui/react";
-import { BsBoundingBox } from "react-icons/bs";
 
 type SideNavProps = {
   projects: ProjectUsers[];
@@ -19,7 +19,7 @@ const SideNav = ({ projects, activeProject }: SideNavProps) => {
   if (!activeProject) return null;
 
   return (
-    <div className="bg-gray-100 h-full w-[300px] px-6 py-3">
+    <div className="bg-white h-full w-[300px] px-6 py-3">
       <ProjectDropdown activeProject={activeProject} projects={projects}>
         {({ open }) => {
           return (
@@ -46,7 +46,11 @@ const SideNav = ({ projects, activeProject }: SideNavProps) => {
 
       <div className="mt-8">
         <NavMenuItem label="Home" href="/app" icon={<BiHomeSmile className="text-lg" />} />
-        <NavMenuItem label="Templates" href="/templates" icon={<BsBoundingBox className="text-lg" />} />
+        <NavMenuItem
+          label="Templates"
+          href="/templates"
+          icon={<RiLayoutMasonryLine className="text-lg" />}
+        />
 
         <NavMenuItem label="Settings" href="/app/settings" icon={<BiCog className="text-lg" />} />
       </div>

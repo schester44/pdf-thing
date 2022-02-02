@@ -1,6 +1,8 @@
 import { useState } from "react";
 import Router from "next/router";
 
+import { IoEllipsisHorizontal } from "react-icons/io5";
+
 import { omit } from "lodash";
 import Layout from "@client/components/dashboard/Layout";
 import { getSessionProject } from "@server/session";
@@ -30,8 +32,8 @@ const Templates: React.FC<{ templates: Template[] }> = ({ templates, ...rest }) 
         }}
       />
 
-      <div className="flex items-center justify-between">
-        <h1>Templates</h1>
+      <div className="flex items-center justify-between mb-8">
+        <h1 className="text-3xl font-bold">Templates</h1>
 
         <Button
           type="primary"
@@ -43,16 +45,28 @@ const Templates: React.FC<{ templates: Template[] }> = ({ templates, ...rest }) 
         </Button>
       </div>
 
-      {templates.map((template) => {
-        return (
-          <div key={template.id}>
-            <h2>
-              {template.name} ({template.key})
-            </h2>
-            <p>{template.id}</p>
-          </div>
-        );
-      })}
+      <div className="grid grid-cols-3 gap-6">
+        {templates.map((template) => {
+          return (
+            <div
+              key={template.id}
+              className=" bg-white p-6 border rounded cursor-pointer hover:shadow-md transition-shadow"
+              onClick={() => {
+                Router.push(`/editor/${template.id}`);
+              }}
+            >
+              <div className="flex items-center">
+                <div className="flex-1">
+                  <h2 className="font-semibold">{template.name}</h2>
+                </div>
+
+                <IoEllipsisHorizontal className="cursor-pointer text-gray-500 hover:text-gray-900" />
+              </div>
+              <p className="text-sm text-gray-400">{template.key}</p>
+            </div>
+          );
+        })}
+      </div>
     </Layout>
   );
 };

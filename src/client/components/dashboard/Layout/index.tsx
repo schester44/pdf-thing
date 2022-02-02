@@ -32,12 +32,8 @@ const Layout = ({ children }: LayoutProps) => {
         activeProject={activeProject?.project}
         projects={data.currentUser.projects as ProjectUsers[]}
       />
-      <div className="flex-1  flex flex-col">
-        <ActionBar user={data.currentUser as User} />
-
-        <div className="flex-1">
-          <div className="h-full p-4">{children}</div>
-        </div>
+      <div className="flex-1 flex flex-col bg-gray-100">
+        <div className="h-full p-8">{children}</div>
       </div>
     </div>
   );

@@ -19,7 +19,7 @@ export const SliderInput = ({ value, onChange, min, max, step }: Props) => {
       onChange={([value]) => onChange(value)}
       renderTrack={({ props, children }) => (
         <div
-          className="w-full h-1 bg-gray-600 rounded-3xl"
+          className="w-full h-1 bg-gray-200 rounded-3xl"
           {...props}
           style={{
             ...props.style,
@@ -32,7 +32,7 @@ export const SliderInput = ({ value, onChange, min, max, step }: Props) => {
         return (
           <div
             {...props}
-            className="w-3 h-3 rounded-full bg-indigo-400"
+            className="w-3 h-3 rounded-full bg-gray-800"
             style={{
               ...props.style,
             }}

@@ -28,7 +28,7 @@ type InputWithAdornmentProps = {
 const InputWithAdornment = ({ value, onChange, placeholder = "auto" }: InputWithAdornmentProps) => {
   return (
     <div className="w-14">
-      <div className="relative w-full flex items-center justify-between bg-gray-700 rounded">
+      <div className="relative w-full flex items-center justify-between bg-gray-100 rounded">
         <Input
           type="number"
           placeholder={placeholder}
@@ -57,7 +57,7 @@ export const FourSidedPanelInput: React.FC<Props> = ({
 }) => {
   return (
     <div className="h-full flex flex-col relative">
-      {label && <span className="text-xs absolute top-1 left-0 text-gray-400">{label}</span>}
+      {label && <span className="text-xs absolute top-1 left-0 text-gray-600">{label}</span>}
 
       <div className="w-full h-12 flex items-center justify-center">
         <InputWithAdornment
@@ -74,7 +74,7 @@ export const FourSidedPanelInput: React.FC<Props> = ({
             onChange={(value) => onChange && onChange("left", value)}
           />
         </div>
-        <div className={cn("flex-1 px-2 mx-2", { "border-4 border-gray-600": !!children })}>
+        <div className={cn("flex-1 px-2 mx-2", { "border-4 border-gray-50": !!children })}>
           {children}
         </div>
         <div className="h-full flex items-center justify-center">

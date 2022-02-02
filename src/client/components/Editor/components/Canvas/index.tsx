@@ -58,16 +58,14 @@ const Positioner = () => {
 
   return (
     <div
-      className="bg-red fixed transition-all pointer-events-none bg-green-500"
+      className="fixed transition-all pointer-events-none bg-green-500"
       style={{
         ...positioner,
         zIndex: 100,
         top: positioner.y,
         left: positioner.x,
       }}
-    >
-      xx
-    </div>
+    ></div>
   );
 };
 

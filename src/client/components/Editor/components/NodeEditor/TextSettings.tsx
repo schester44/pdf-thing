@@ -18,7 +18,7 @@ export const TextSettings = ({ nodeId }: Props) => {
       <div className="flex px-3 py-2">
         <textarea
           value={node.text || ""}
-          className="bg-gray-700 text-white text-sm rounded p-1 outline-none w-full"
+          className="bg-gray-100 text-gray-800 text-sm rounded p-2 outline-none focus:outline-none focus:ring-2 focus:ring-indigo-500  w-full"
           onChange={(e) => {
             setNodeState((node) => {
               if (!node) return node;

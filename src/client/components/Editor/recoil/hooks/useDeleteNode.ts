@@ -1,7 +1,7 @@
 import { useRecoilCallback } from "recoil";
 import invariant from "tiny-invariant";
 import { Node } from "../../types";
-import { nodesState, totalNodeCountsState } from "../atoms";
+import { nodeIdsState, nodesState, totalNodeCountsState } from "../atoms";
 
 export function useDeleteNode() {
   return useRecoilCallback(({ set, snapshot, reset }) => async (id: Node["id"]) => {
@@ -22,6 +22,8 @@ export function useDeleteNode() {
         nodes,
       };
     });
+
+    set(nodeIdsState, (nodeIds) => nodeIds.filter((_id) => id !== _id));
 
     set(totalNodeCountsState, (counts) => {
       if (!node) return counts;

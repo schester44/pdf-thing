@@ -16,7 +16,7 @@ const Logo = () => {
         </div>
       </Link>
 
-      <div className="text-xl text-white italic">{template.name}</div>
+      <div className="text-xl text-black italic">{template.name}</div>
     </div>
   );
 };
@@ -25,7 +25,7 @@ export const LeftPanel = () => {
   const [width, setWidth] = useState(300);
 
   return (
-    <div className="bg-gray-900 h-screen overflow-hidden flex flex-col relative" style={{ width }}>
+    <div className="bg-white h-screen overflow-hidden flex flex-col relative" style={{ width }}>
       <Logo />
 
       <div className="pt-4 overflow-auto flex-1">

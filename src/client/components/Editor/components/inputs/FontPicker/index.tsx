@@ -16,7 +16,7 @@ export const FontPicker: React.FC<Props> = ({ value, onChange }) => {
   return (
     <div className="z-50 relative">
       <Listbox value={value} onChange={onChange}>
-        <Listbox.Button className="rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-indigo-500 hover:text-white text-sm bg-gray-800 w-full text-left py-1 px-2">
+        <Listbox.Button className="rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 hover:text-gray-900 text-gray-700 text-xs bg-gray-100 w-full text-left p-2">
           {fontMap[value as keyof typeof fontMap] || fontMap[fonts[0]]}
         </Listbox.Button>
 

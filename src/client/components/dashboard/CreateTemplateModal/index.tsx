@@ -16,7 +16,7 @@ type Props = {
 
 const alphaRegex = new RegExp(/[^a-zA-Z-_0-9]/gi);
 
-const CreateTemplatetModal = ({ onCreate, onClose, open = true }: Props) => {
+const CreateTemplateModal = ({ onCreate, onClose, open = true }: Props) => {
   const [{ fetching }, createTemplate] = useCreateTemplateMutation();
   const [name, setName] = React.useState("");
   const [key, setKey] = React.useState("");
@@ -115,4 +115,4 @@ const CreateTemplatetModal = ({ onCreate, onClose, open = true }: Props) => {
   );
 };
 
-export default CreateTemplatetModal;
+export default CreateTemplateModal;

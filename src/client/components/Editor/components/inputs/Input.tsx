@@ -9,7 +9,7 @@ export const Input = ({ type = "text", ...props }: Props) => {
     <input
       {...props}
       type={type}
-      className={`bg-gray-700 rounded text-white w-full text-xs p-1 outline-none ${
+      className={`bg-gray-100 rounded text-gray-800 w-full text-xs p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
         props.className || ""
       }`}
     />

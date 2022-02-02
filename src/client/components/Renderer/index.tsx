@@ -83,8 +83,6 @@ const renderNode = (
     case "text":
       let nodeText = node.text || "";
 
-      console.log({ data, nodeText });
-
       if (nodeText.length > 0) {
         nodeText = nodeText.replace(variableRegex, (tag, dataKey) => {
           return payload[dataKey];
@@ -103,9 +101,6 @@ const renderNode = (
             <View key={nodeId + index} style={style}>
               {node.nodes?.map((childNodeId) => {
                 const childData = data[childNodeId];
-
-                //TODO: Come back  to this... it's a bit of a hack
-                // Will we be able to get the correct data based on our de-nested/simplified logic in the frontend?
 
                 const parentNodeId = recursivelyGetParent(template.nodes, nodeId, parentIndex);
 

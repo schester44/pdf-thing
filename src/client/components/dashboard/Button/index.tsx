@@ -9,17 +9,17 @@ type ClassStyles = {
 const classNames: ClassStyles = {
   default: {
     base:
-      "inline-flex justify-center rounded border border-gray-300 bg-gray-100 leading-6 font-medium text-gray-600 shadow-sm transition ease-in-out duration-150 sm:leading-5",
+      "inline-flex justify-center rounded border border-gray-300 bg-gray-100 leading-6 text-gray-600 shadow-sm transition ease-in-out duration-150 sm:leading-5",
     enabled: "hover:text-gray-700 focus:border-blue-300",
   },
   primary: {
     base:
-      "inline-flex justify-center rounded border border-indigo-500 bg-indigo-500 leading-6 font-medium text-gray-100 shadow-sm transition ease-in-out duration-150 sm:leading-5",
+      "inline-flex justify-center rounded border border-indigo-500 bg-indigo-500 leading-6 text-gray-100 shadow-sm transition ease-in-out duration-150 sm:leading-5",
     enabled: "hover:text-white hover:bg-indigo-600 hover:border-indigo-700 focus:border-indigo-900",
   },
   secondary: {
     base:
-      "inline-flex justify-center rounded border border-gray-500 bg-gray-500 leading-6 font-medium text-gray-100 shadow-sm transition ease-in-out duration-150 sm:leading-5",
+      "inline-flex justify-center rounded border border-gray-500 bg-gray-500 leading-6 text-gray-100 shadow-sm transition ease-in-out duration-150 sm:leading-5",
     enabled: "hover:text-white hover:bg-gray-600 hover:border-gray-600 focus:border-indigo-900",
   },
 };

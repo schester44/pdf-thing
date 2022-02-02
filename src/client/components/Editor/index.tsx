@@ -26,7 +26,7 @@ export const Editor = ({ initialTemplate }: Props) => {
   if (!isLoaded) return <div>LOADING</div>;
 
   return (
-    <div className="w-full bg-black h-full flex">
+    <div className="w-full bg-gray-100 h-full flex">
       <LeftPanel />
 
       <div className="flex-1">
