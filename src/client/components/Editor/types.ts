@@ -1,4 +1,7 @@
+// TODO: This ccould project just be a 'ProjectTemplate' type
 export type Template = {
+  id: string;
+  key: string;
   name: string;
   pageIds: Node["id"][];
   nodes: Record<string, Node>;

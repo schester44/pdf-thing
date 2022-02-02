@@ -6,6 +6,7 @@ import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 import NavMenuItem from "./MenuItem";
 import ProjectDropdown from "./ProjectDropdown";
 import { Menu } from "@headlessui/react";
+import { BsBoundingBox } from "react-icons/bs";
 
 type SideNavProps = {
   projects: ProjectUsers[];
@@ -45,6 +46,7 @@ const SideNav = ({ projects, activeProject }: SideNavProps) => {
 
       <div className="mt-8">
         <NavMenuItem label="Home" href="/app" icon={<BiHomeSmile className="text-lg" />} />
+        <NavMenuItem label="Templates" href="/templates" icon={<BsBoundingBox className="text-lg" />} />
 
         <NavMenuItem label="Settings" href="/app/settings" icon={<BiCog className="text-lg" />} />
       </div>

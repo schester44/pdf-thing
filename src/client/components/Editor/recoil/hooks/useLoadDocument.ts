@@ -17,6 +17,8 @@ export function useLoadDocument() {
     set(documentState, (doc) => {
       return {
         ...doc,
+        id: template.id,
+        key: template.key,
         name: template.name,
       };
     });

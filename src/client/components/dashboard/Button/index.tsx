@@ -9,7 +9,7 @@ type ClassStyles = {
 const classNames: ClassStyles = {
   default: {
     base:
-      "inline-flex justify-center rounded border border-gray-300 bg-gray-900 leading-6 font-medium text-gray-600 shadow-sm transition ease-in-out duration-150 sm:leading-5",
+      "inline-flex justify-center rounded border border-gray-300 bg-gray-100 leading-6 font-medium text-gray-600 shadow-sm transition ease-in-out duration-150 sm:leading-5",
     enabled: "hover:text-gray-700 focus:border-blue-300",
   },
   primary: {

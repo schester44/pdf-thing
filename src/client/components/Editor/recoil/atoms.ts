@@ -3,7 +3,8 @@ import memoize from "../utils/memoize";
 import { Node } from "../types";
 
 const defaultDocumentState = {
-  id: undefined,
+  id: "",
+  key: "",
   name: "Untitled Template",
   pageWidth: 2480 / 3,
   pageHeight: 3508 / 3,

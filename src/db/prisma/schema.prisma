@@ -55,7 +55,8 @@ model ProjectTemplate {
   data      Json
   key       String
 
-  @@map(name: "templates")
+
+  @@map("templates")
 }
 
 model Session {
@@ -96,8 +97,6 @@ model UserInvites {
   accepted        Boolean  @default(false)
   invitedByUserId Int      @unique
   invitedBy       User     @relation("invitedBy", fields: [invitedByUserId], references: [id])
-
-
 
   @@unique([projectId, userId])
 }

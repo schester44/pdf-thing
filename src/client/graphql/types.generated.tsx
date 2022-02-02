@@ -13,6 +13,8 @@ export type Scalars = {
   Int: number;
   Float: number;
   DateTime: any;
+  /** The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
+  JSONObject: any;
 };
 
 export type Mutation = {
@@ -22,8 +24,10 @@ export type Mutation = {
   createBillingPortalSession?: Maybe<Scalars['String']>;
   createCheckoutSession?: Maybe<Scalars['String']>;
   createProject?: Maybe<Project>;
+  createTemplate?: Maybe<ProjectTemplate>;
   deleteProject?: Maybe<Scalars['Boolean']>;
   inviteUserToProject?: Maybe<Scalars['Boolean']>;
+  saveTemplate?: Maybe<Scalars['Boolean']>;
   updateProject?: Maybe<Project>;
 };
 
@@ -55,6 +59,12 @@ export type MutationCreateProjectArgs = {
 };
 
 
+export type MutationCreateTemplateArgs = {
+  key: Scalars['String'];
+  name: Scalars['String'];
+};
+
+
 export type MutationDeleteProjectArgs = {
   id: Scalars['String'];
 };
@@ -64,6 +74,14 @@ export type MutationInviteUserToProjectArgs = {
   email: Scalars['String'];
   name: Scalars['String'];
   projectId: Scalars['String'];
+};
+
+
+export type MutationSaveTemplateArgs = {
+  data: Scalars['JSONObject'];
+  id: Scalars['String'];
+  key: Scalars['String'];
+  name: Scalars['String'];
 };
 
 
@@ -103,6 +121,14 @@ export type ProjectUsersArgs = {
   last?: Maybe<Scalars['Int']>;
 };
 
+export type ProjectTemplate = {
+  __typename?: 'ProjectTemplate';
+  data?: Maybe<Scalars['JSONObject']>;
+  id: Scalars['String'];
+  key: Scalars['String'];
+  name: Scalars['String'];
+};
+
 export enum ProjectUserRole {
   Admin = 'ADMIN',
   User = 'USER'
@@ -130,6 +156,7 @@ export type Query = {
   project?: Maybe<Project>;
   projectUsers?: Maybe<Array<Maybe<User>>>;
   projects?: Maybe<Array<Maybe<Project>>>;
+  template?: Maybe<ProjectTemplate>;
 };
 
 
@@ -140,6 +167,11 @@ export type QueryProjectArgs = {
 
 export type QueryProjectUsersArgs = {
   projectId: Scalars['String'];
+};
+
+
+export type QueryTemplateArgs = {
+  id: Scalars['String'];
 };
 
 export type Subscription = {
@@ -267,6 +299,24 @@ export type UserProjectsQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type UserProjectsQueryQuery = { __typename?: 'Query', projects?: Array<{ __typename?: 'Project', id: string, name: string } | null | undefined> | null | undefined };
+
+export type CreateTemplateMutationVariables = Exact<{
+  name: Scalars['String'];
+  key: Scalars['String'];
+}>;
+
+
+export type CreateTemplateMutation = { __typename?: 'Mutation', createTemplate?: { __typename?: 'ProjectTemplate', id: string, name: string, key: string } | null | undefined };
+
+export type SaveTemplateMutationVariables = Exact<{
+  id: Scalars['String'];
+  data: Scalars['JSONObject'];
+  name: Scalars['String'];
+  key: Scalars['String'];
+}>;
+
+
+export type SaveTemplateMutation = { __typename?: 'Mutation', saveTemplate?: boolean | null | undefined };
 
 export type GetCurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -407,6 +457,28 @@ export const UserProjectsQueryDocument = gql`
 
 export function useUserProjectsQueryQuery(options: Omit<Urql.UseQueryArgs<UserProjectsQueryQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<UserProjectsQueryQuery>({ query: UserProjectsQueryDocument, ...options });
+};
+export const CreateTemplateDocument = gql`
+    mutation createTemplate($name: String!, $key: String!) {
+  createTemplate(name: $name, key: $key) {
+    id
+    name
+    key
+  }
+}
+    `;
+
+export function useCreateTemplateMutation() {
+  return Urql.useMutation<CreateTemplateMutation, CreateTemplateMutationVariables>(CreateTemplateDocument);
+};
+export const SaveTemplateDocument = gql`
+    mutation saveTemplate($id: String!, $data: JSONObject!, $name: String!, $key: String!) {
+  saveTemplate(id: $id, name: $name, data: $data, key: $key)
+}
+    `;
+
+export function useSaveTemplateMutation() {
+  return Urql.useMutation<SaveTemplateMutation, SaveTemplateMutationVariables>(SaveTemplateDocument);
 };
 export const GetCurrentUserDocument = gql`
     query getCurrentUser {

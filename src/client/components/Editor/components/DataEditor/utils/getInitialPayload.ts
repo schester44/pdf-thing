@@ -1,11 +1,7 @@
 import { Template } from "@client/components/Editor/types";
 import dot from "dot-object";
 
-const recursivelyGetParentId = (
-  nodes: Template["nodes"],
-  nodeId: string,
-  parentIndex?: number
-): string => {
+const recursivelyGetParentId = (nodes: Template["nodes"], nodeId: string): string => {
   const node = nodes[nodeId];
   const parentNodeId = node.parentId;
 
@@ -51,12 +47,12 @@ export const getInitialPayload = (nodes: Template["nodes"]): Record<string, any>
   nodeIds.forEach((id) => {
     const node = nodes[id as keyof typeof nodes];
 
-    console.log(node.id, node.key);
+    // no need to run this code if we're further up the tree since we're recursively calling this function and/or running this only on image nodes.
+    if (node.type === "page" || (node.nodes && node.nodes?.length > 0)) return;
 
     if (!!node.key) {
       const absoluteId = removeKeyNesting(recursivelyGetParentId(nodes, id));
 
-      console.log(absoluteId);
       dataKeys[absoluteId] = "";
 
       return;
@@ -72,8 +68,6 @@ export const getInitialPayload = (nodes: Template["nodes"]): Record<string, any>
       dataKeys[key] = "";
     });
   });
-
-  console.log(dataKeys);
 
   return dot.object(dataKeys);
 };

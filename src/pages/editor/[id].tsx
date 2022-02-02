@@ -1,8 +1,12 @@
 import { EditorContainer as Editor } from "@client/components/Editor";
 import { Template } from "@client/components/Editor/types";
+import prisma from "src/db/prisma/client";
+import { getSessionProject } from "@server/session";
+import { NextPageContext } from "next";
+import invariant from "tiny-invariant";
 
-export default function EditorIndex({ initialTemplate }: { initialTemplate: Template }) {
-  return <Editor initialTemplate={initialTemplate} />;
+export default function EditorIndex({ template, ...props }: { template: Template }) {
+  return <Editor initialTemplate={template} />;
 }
 
 const template: Template = {
@@ -247,8 +251,45 @@ const template: Template = {
   },
 };
 
-EditorIndex.getInitialProps = (): { initialTemplate: Template } => {
+export async function getServerSideProps({ req, query }: NextPageContext) {
+  const userProject = await getSessionProject(req);
+
+  invariant(userProject);
+
+  const template = await prisma.projectTemplate.findFirst({
+    where: {
+      id: query.id,
+      projectId: userProject.id,
+    },
+  });
+
+  if (!template) {
+    // TODO: 404
+  }
+
+  invariant(template);
+
+  const data = template.data as Record<string, any>;
+
   return {
-    initialTemplate: template,
+    props: {
+      template: {
+        id: template.id,
+        name: template.name,
+        key: template.key,
+        // TODO: How to type data?
+        pageIds: data.pageIds || ["page-1"],
+        nodes: data.nodes || DEFAULT_NODES,
+      },
+    },
   };
+}
+
+const DEFAULT_NODES = {
+  "page-1": {
+    name: "Page 1",
+    id: "page-1",
+    type: "page",
+    nodes: [],
+  },
 };

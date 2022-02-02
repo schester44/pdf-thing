@@ -6,8 +6,23 @@
 
 import type { Context } from "./context"
 import type { FieldAuthorizeResolver } from "nexus/dist/plugins/fieldAuthorizePlugin"
-
-
+import type { core } from "nexus"
+declare global {
+  interface NexusGenCustomInputMethods<TypeName extends string> {
+    /**
+     * The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+     */
+    json<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "JSONObject";
+  }
+}
+declare global {
+  interface NexusGenCustomOutputMethods<TypeName extends string> {
+    /**
+     * The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+     */
+    json<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "JSONObject";
+  }
+}
 declare global {
   interface NexusGenCustomOutputProperties<TypeName extends string> {
     model: NexusPrisma<TypeName, 'model'>
@@ -45,12 +60,19 @@ export interface NexusGenScalars {
   Boolean: boolean
   ID: string
   DateTime: any
+  JSONObject: any
 }
 
 export interface NexusGenObjects {
   Mutation: {};
   Project: { // root type
     id: string; // String!
+    name: string; // String!
+  }
+  ProjectTemplate: { // root type
+    data?: NexusGenScalars['JSONObject'] | null; // JSONObject
+    id: string; // String!
+    key: string; // String!
     name: string; // String!
   }
   ProjectUsers: { // root type
@@ -87,8 +109,10 @@ export interface NexusGenFieldTypes {
     createBillingPortalSession: string | null; // String
     createCheckoutSession: string | null; // String
     createProject: NexusGenRootTypes['Project'] | null; // Project
+    createTemplate: NexusGenRootTypes['ProjectTemplate'] | null; // ProjectTemplate
     deleteProject: boolean | null; // Boolean
     inviteUserToProject: boolean | null; // Boolean
+    saveTemplate: boolean | null; // Boolean
     updateProject: NexusGenRootTypes['Project'] | null; // Project
   }
   Project: { // field return type
@@ -97,6 +121,12 @@ export interface NexusGenFieldTypes {
     name: string; // String!
     subscriptions: NexusGenRootTypes['Subscription'][]; // [Subscription!]!
     users: NexusGenRootTypes['ProjectUsers'][]; // [ProjectUsers!]!
+  }
+  ProjectTemplate: { // field return type
+    data: NexusGenScalars['JSONObject'] | null; // JSONObject
+    id: string; // String!
+    key: string; // String!
+    name: string; // String!
   }
   ProjectUsers: { // field return type
     project: NexusGenRootTypes['Project']; // Project!
@@ -108,6 +138,7 @@ export interface NexusGenFieldTypes {
     project: NexusGenRootTypes['Project'] | null; // Project
     projectUsers: Array<NexusGenRootTypes['User'] | null> | null; // [User]
     projects: Array<NexusGenRootTypes['Project'] | null> | null; // [Project]
+    template: NexusGenRootTypes['ProjectTemplate'] | null; // ProjectTemplate
   }
   Subscription: { // field return type
     endDate: NexusGenScalars['DateTime']; // DateTime!
@@ -134,8 +165,10 @@ export interface NexusGenFieldTypeNames {
     createBillingPortalSession: 'String'
     createCheckoutSession: 'String'
     createProject: 'Project'
+    createTemplate: 'ProjectTemplate'
     deleteProject: 'Boolean'
     inviteUserToProject: 'Boolean'
+    saveTemplate: 'Boolean'
     updateProject: 'Project'
   }
   Project: { // field return type name
@@ -144,6 +177,12 @@ export interface NexusGenFieldTypeNames {
     name: 'String'
     subscriptions: 'Subscription'
     users: 'ProjectUsers'
+  }
+  ProjectTemplate: { // field return type name
+    data: 'JSONObject'
+    id: 'String'
+    key: 'String'
+    name: 'String'
   }
   ProjectUsers: { // field return type name
     project: 'Project'
@@ -155,6 +194,7 @@ export interface NexusGenFieldTypeNames {
     project: 'Project'
     projectUsers: 'User'
     projects: 'Project'
+    template: 'ProjectTemplate'
   }
   Subscription: { // field return type name
     endDate: 'DateTime'
@@ -193,6 +233,10 @@ export interface NexusGenArgTypes {
     createProject: { // args
       name: string; // String!
     }
+    createTemplate: { // args
+      key: string; // String!
+      name: string; // String!
+    }
     deleteProject: { // args
       id: string; // String!
     }
@@ -200,6 +244,12 @@ export interface NexusGenArgTypes {
       email: string; // String!
       name: string; // String!
       projectId: string; // String!
+    }
+    saveTemplate: { // args
+      data: NexusGenScalars['JSONObject']; // JSONObject!
+      id: string; // String!
+      key: string; // String!
+      name: string; // String!
     }
     updateProject: { // args
       id: string; // String!
@@ -226,6 +276,9 @@ export interface NexusGenArgTypes {
     }
     projectUsers: { // args
       projectId: string; // String!
+    }
+    template: { // args
+      id: string; // String!
     }
   }
   User: {
