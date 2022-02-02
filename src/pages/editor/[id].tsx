@@ -280,6 +280,7 @@ export async function getServerSideProps({ req, query }: NextPageContext) {
         // TODO: How to type data?
         pageIds: data.pageIds || ["page-1"],
         nodes: data.nodes || DEFAULT_NODES,
+        nodeIds: data.nodeIds || ["page-1"],
       },
     },
   };

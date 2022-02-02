@@ -22,14 +22,13 @@ export const useGetTemplate = () => {
         return node;
       });
 
-      console.log(pageIds, nodeIds);
-
       return {
         id: template.id,
         key: template.key,
         name: template.name,
         nodes,
         pageIds,
+        nodeIds,
       };
     };
   });

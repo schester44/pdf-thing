@@ -20,6 +20,7 @@ export const RightPanel = () => {
       data: {
         nodes: template.nodes,
         pageIds: template.pageIds,
+        nodeIds: template.nodeIds,
       },
     });
 

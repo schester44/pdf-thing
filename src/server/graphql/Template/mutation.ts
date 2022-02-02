@@ -65,9 +65,6 @@ export const saveTemplate = mutationField("saveTemplate", {
       throw new UserInputError("Template not found");
     }
 
-    console.log("saving data", data.nodes);
-    console.log("saving data", data.pageIds);
-
     await ctx.prisma.projectTemplate.update({
       where: {
         id,

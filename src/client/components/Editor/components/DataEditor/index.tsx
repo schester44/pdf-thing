@@ -16,9 +16,9 @@ export const DataEditor = () => {
   React.useEffect(() => {
     const template = getTemplate();
 
-    const payload = getInitialPayload(template.nodes);
+    const data = getInitialPayload(template.nodes);
 
-    setPayload(JSON.stringify({ template: template.key, payload }, null, 2));
+    setPayload(JSON.stringify({ template: template.key, data }, null, 2));
   }, []);
 
   return (

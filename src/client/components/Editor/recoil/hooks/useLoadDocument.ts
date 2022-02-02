@@ -31,11 +31,9 @@ export function useLoadDocument() {
       page_number: 0,
     };
 
-    const nodeIds = Object.keys(template.nodes);
+    set(nodeIdsState, template.nodeIds);
 
-    set(nodeIdsState, nodeIds);
-
-    nodeIds.forEach((nodeId) => {
+    template.nodeIds.forEach((nodeId) => {
       const node = template.nodes[nodeId];
 
       nodeCounts[node.type]++;
