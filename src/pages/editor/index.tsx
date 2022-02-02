@@ -235,7 +235,7 @@ const template: Template = {
     },
     value: {
       name: "Value",
-      id: "name",
+      id: "value",
       type: "text",
       key: "value",
       parentId: "section_rows",

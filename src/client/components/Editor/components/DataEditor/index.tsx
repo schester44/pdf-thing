@@ -47,6 +47,7 @@ export const DataEditor = () => {
 
     const payload = getInitialPayload(template.nodes);
 
+    console.log(payload);
     setPayload(
       JSON.stringify({ template_id: "d43cd85f-6020-40cb-84dc-8de0ff9937ab", payload }, null, 2)
     );

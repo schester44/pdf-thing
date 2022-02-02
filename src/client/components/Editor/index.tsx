@@ -13,7 +13,7 @@ import { useLoadDocument } from "./recoil/hooks/useLoadDocument";
 type Props = { initialTemplate: Template };
 
 export const Editor = ({ initialTemplate }: Props) => {
-  const [activeWindow, setActiveWindow] = useState("design");
+  const [activeWindow, setActiveWindow] = useState("data");
   const loadDocument = useLoadDocument();
   const [isLoaded, setLoaded] = useState(false);
 

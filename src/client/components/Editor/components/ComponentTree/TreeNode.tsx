@@ -59,7 +59,14 @@ export const TreeNode = ({ id, isParentHidden = false }: Props) => {
     void,
     { isOver: boolean; canDrop: boolean }
   >({
-    accept: ["view", "image", "text", "sidebar-treenode-image"],
+    accept: [
+      "view",
+      "image",
+      "text",
+      "sidebar-treenode-image",
+      "sidebar-treenode-text",
+      "sidebar-treenode-view",
+    ],
     collect: (monitor) => {
       return {
         isOver: monitor.isOver({ shallow: true }),
@@ -88,9 +95,7 @@ export const TreeNode = ({ id, isParentHidden = false }: Props) => {
 
       invariant(node);
 
-      const isExistingNode = !!item.id;
-
-      if (isExistingNode) {
+      if (!!item.id) {
         moveNode({
           newParentNodeId: node.id,
           movingNodeId: item.id,

@@ -1,6 +1,6 @@
 import { useRecoilCallback } from "recoil";
 import { Node } from "../types";
-import { nodesState, selectedNodeState, totalNodeCountsState } from "./atoms";
+import { nodeIdsState, nodesState, selectedNodeState, totalNodeCountsState } from "./atoms";
 import { activeNodeSelector } from "./selectors";
 import { createNode } from "./utils/createPage";
 
@@ -30,6 +30,8 @@ export function useNewNode() {
         }));
 
         set(selectedNodeState, node.id);
+
+        set(nodeIdsState, (ids) => [...ids, node.id]);
 
         set(nodesState(parentId), (parentNode) => {
           if (!parentNode) return parentNode;

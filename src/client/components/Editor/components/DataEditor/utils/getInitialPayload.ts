@@ -6,22 +6,41 @@ const recursivelyGetParentId = (
   nodeId: string,
   parentIndex?: number
 ): string => {
-  const parent = nodes[nodeId].parentId;
-  const parentIsPage = parent && nodes[parent]?.type === "page";
+  const node = nodes[nodeId];
+  const parentNodeId = node.parentId;
 
-  if (parent && !parentIsPage) {
-    const parentNode = nodes[parent];
+  const parentIsPage = parentNodeId && nodes[parentNodeId]?.type === "page";
+
+  if (parentNodeId && !parentIsPage) {
+    const parentNode = nodes[parentNodeId];
 
     return (
-      recursivelyGetParentId(nodes, parent) +
+      recursivelyGetParentId(nodes, parentNodeId) +
       (parentNode.props?.repeats ? "[0]" : "") +
       "." +
-      (parentIndex ? `[${parentIndex}].` : "") +
-      nodeId
+      node.key
     );
   } else {
-    return nodeId;
+    return node.key || "IF_YOU_SEE_THIS_ITS_A_BUG";
   }
+};
+
+const removeKeyNesting = (key: string) => {
+  const parts = key.split(".");
+
+  let newKey = "";
+
+  for (let i = 0; i < parts.length; i++) {
+    const part = parts[i];
+
+    if (part.endsWith("[0]") && i !== parts.length - 1) {
+      newKey += `${part}.`;
+    }
+  }
+
+  newKey += parts[parts.length - 1];
+
+  return newKey;
 };
 
 export const getInitialPayload = (nodes: Template["nodes"]): Record<string, any> => {
@@ -32,9 +51,12 @@ export const getInitialPayload = (nodes: Template["nodes"]): Record<string, any>
   nodeIds.forEach((id) => {
     const node = nodes[id as keyof typeof nodes];
 
-    if (!!node.key) {
-      const absoluteId = recursivelyGetParentId(nodes, id);
+    console.log(node.id, node.key);
 
+    if (!!node.key) {
+      const absoluteId = removeKeyNesting(recursivelyGetParentId(nodes, id));
+
+      console.log(absoluteId);
       dataKeys[absoluteId] = "";
 
       return;
@@ -50,6 +72,8 @@ export const getInitialPayload = (nodes: Template["nodes"]): Record<string, any>
       dataKeys[key] = "";
     });
   });
+
+  console.log(dataKeys);
 
   return dot.object(dataKeys);
 };

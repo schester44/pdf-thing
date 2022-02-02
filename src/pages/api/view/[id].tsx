@@ -221,10 +221,75 @@ const payload: Payload = {
     {
       section_header_text: "Munich Information",
       section_rows: [
+        
         {
-          name: "ANYTHING GOEZZZ HERE",
-          value: "John Doe",
+          name: "Arcana Reg #",
+          value: "1242",
         },
+        {
+          name: "Property Type",
+          value: "Residential 1-4 Family Dwelling",
+        },
+        {
+          name: "Property Address",
+          value: "8918 S. Wacker Dr. Chicago, IL 60606",
+        },
+      ],
+    },  {
+      section_header_text: "Munich Information",
+      section_rows: [
+        
+        {
+          name: "Arcana Reg #",
+          value: "1242",
+        },
+        {
+          name: "Property Type",
+          value: "Residential 1-4 Family Dwelling",
+        },
+        {
+          name: "Property Address",
+          value: "8918 S. Wacker Dr. Chicago, IL 60606",
+        },
+      ],
+    },  {
+      section_header_text: "Munich Information",
+      section_rows: [
+        
+        {
+          name: "Arcana Reg #",
+          value: "1242",
+        },
+        {
+          name: "Property Type",
+          value: "Residential 1-4 Family Dwelling",
+        },
+        {
+          name: "Property Address",
+          value: "8918 S. Wacker Dr. Chicago, IL 60606",
+        },
+      ],
+    },  {
+      section_header_text: "Munich Information",
+      section_rows: [
+        
+        {
+          name: "Arcana Reg #",
+          value: "1242",
+        },
+        {
+          name: "Property Type",
+          value: "Residential 1-4 Family Dwelling",
+        },
+        {
+          name: "Property Address",
+          value: "8918 S. Wacker Dr. Chicago, IL 60606",
+        },
+      ],
+    },  {
+      section_header_text: "Munich Information",
+      section_rows: [
+        
         {
           name: "Arcana Reg #",
           value: "1242",
