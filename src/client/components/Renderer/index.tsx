@@ -65,8 +65,6 @@ const renderNode = ({ template, payload, node, path, styles }: RenderNodeArgs) =
     case "page_number":
       return <Text key={node.id} style={style} render={({ pageNumber }) => `Page ${pageNumber}`} />;
     case "view":
-      let children = [];
-
       if (node.props?.repeats) {
         const nextPath = createNextPath(path, node.key);
 
@@ -76,45 +74,47 @@ const renderNode = ({ template, payload, node, path, styles }: RenderNodeArgs) =
         const data = get(payload, cleanPath) as any[];
 
         // we don't really care about the contents of data here, we just want to loop over every item within the data to ensure we print the Node enough times with the correct key.
-        children = data.map((data, index) => {
+        return data.map((data, index) => {
           invariant(node.nodes, "node.nodes is required");
 
-          return node.nodes.map((nodeId) => {
-            const path = `${nextPath}[${index}]`;
+          return (
+            <View key={`${node.id}-${index}`} {...node.props} style={style}>
+              {node.nodes.map((nodeId) => {
+                const path = `${nextPath}[${index}]`;
 
-            return renderNode({
-              template,
-              payload,
-              node: template.nodes[nodeId],
-              path: path,
-              styles,
-            });
-          });
+                return renderNode({
+                  template,
+                  payload,
+                  node: template.nodes[nodeId],
+                  path: path,
+                  styles,
+                });
+              })}
+            </View>
+          );
         });
       } else {
         // TODO: Is it possible for this to not exist? guess we will see. Ideally TS would know that this type of element would have an array of nodes.
         invariant(node.nodes, "node.nodes is required");
 
-        children = node.nodes.map((nodeId) => {
-          const childNode = template.nodes[nodeId];
+        return (
+          <View key={node.id} {...node.props} style={style}>
+            {node.nodes.map((nodeId) => {
+              const childNode = template.nodes[nodeId];
 
-          return renderNode({
-            template,
-            payload,
-            node: childNode,
+              return renderNode({
+                template,
+                payload,
+                node: childNode,
 
-            // we can just pass the parent path as this nodes path since we know that it does  not repeat. non-repeated nodes are excluded from paths because they're stripped from the payload to keep the payload flat.
-            path: path,
-            styles,
-          });
-        });
+                // we can just pass the parent path as this nodes path since we know that it does  not repeat. non-repeated nodes are excluded from paths because they're stripped from the payload to keep the payload flat.
+                path: path,
+                styles,
+              });
+            })}
+          </View>
+        );
       }
-
-      return (
-        <View key={node.id} {...node.props} style={style}>
-          {children}
-        </View>
-      );
   }
 };
 
