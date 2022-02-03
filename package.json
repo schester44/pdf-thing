@@ -26,6 +26,8 @@
     "test:ci:client": "cypress run"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.49.0",
+    "@aws-sdk/lib-storage": "^3.49.0",
     "@headlessui/react": "^1.4.3",
     "@nexus/schema": "^0.20.1",
     "@prisma/client": "3.1.1",
@@ -36,6 +38,7 @@
     "@types/classnames": "^2.3.1",
     "@types/dot-object": "^2.1.2",
     "@types/fbjs": "^3.0.2",
+    "@types/lodash": "^4.14.178",
     "@types/micro": "^7.3.6",
     "@types/micro-cors": "^0.1.2",
     "@types/mousetrap": "^1.6.8",
@@ -55,6 +58,7 @@
     "graphql-middleware": "^6.1.7",
     "graphql-shield": "^7.5.0",
     "graphql-type-json": "^0.3.2",
+    "jsum": "^2.0.0-alpha.3",
     "klona": "^2.0.4",
     "lodash": "^4.17.21",
     "micro": "^9.3.4",
@@ -86,6 +90,7 @@
     "react-simple-code-editor": "^0.11.0",
     "recoil": "^0.5.2",
     "reflect-metadata": "^0.1.13",
+    "stream": "^0.0.2",
     "stripe": "^8.178.0",
     "superjson": "^1.7.5",
     "tailwindcss": "^2.2.16",

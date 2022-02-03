@@ -1,9 +1,16 @@
 import fs from "fs";
+import { v4 } from "uuid";
+import jsum from "jsum";
+import stream from "stream";
+
 import { NextApiRequest, NextApiResponse } from "next";
 import Cors from "cors";
 import prisma from "@db/prisma/client";
 import { renderToStream } from "@react-pdf/renderer";
 import { Renderer } from "@client/components/Renderer";
+
+import { S3Client } from "@aws-sdk/client-s3";
+import { Upload } from "@aws-sdk/lib-storage";
 
 const cors = Cors({
   methods: ["POST"],
@@ -54,23 +61,64 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
   }
 
+  const hash = generateHash(template.data, req.body.data);
+
   const stream = await renderToStream(
-    <Renderer
-      payload={req.body.data}
-      template={{
-        nodes: template.data.nodes,
-        nodeIds: template.data.nodeIds,
-        pageIds: template.data.pageIds,
-      }}
-    />
+    <Renderer template={template.data} payload={req.body.data} />
   );
 
-  // TODO: stream this to the cloud (aws)
-  const writeStream = fs.createWriteStream("./test.pdf");
+  const key = `${v4()}.pdf`;
+
+  const { writeStream, upload } = uploadStream({ Bucket: "pdf-thing", Key: key });
 
   stream.pipe(writeStream);
 
+  await upload.done();
+
+  await prisma.templateRuns.create({
+    data: {
+      projectId: template.projectId,
+      templateId: template.id,
+      externalId: key,
+      hash,
+      status: "SUCCESS",
+    },
+  });
+
   res.status(200).json({
-    url: "https://signed-url-of-uploaded-pdf.com",
+    key,
+    url: getExternalUrl(key),
   });
 }
+
+const generateHash = (template: any, data: any) => {
+  return jsum.digest(template, "SHA256", "hex") + jsum.digest(data, "SHA256", "hex");
+};
+
+const getExternalUrl = (key: string) => {
+  return `https://pdfthing.s3.amazonaws.com/${key}`;
+};
+
+const uploadStream = ({ Bucket, Key }: { Bucket: string; Key: string }) => {
+  const pass = new stream.PassThrough();
+  const client = new S3Client({
+    region: "us-east-1",
+  });
+
+  pass.on("data", (x) => {
+    console.log("data received", x.length);
+  });
+
+  return {
+    writeStream: pass,
+    upload: new Upload({
+      client,
+      params: {
+        Bucket,
+        Key,
+        Body: pass,
+        ContentType: "application/pdf",
+      },
+    }),
+  };
+};

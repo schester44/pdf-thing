@@ -18,6 +18,8 @@ export const DataEditor = () => {
 
     const data = getInitialPayload(template.nodes);
 
+    console.log(data);
+
     setPayload(JSON.stringify({ template: template.key, data }, null, 2));
   }, []);
 

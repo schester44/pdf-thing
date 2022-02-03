@@ -51,26 +51,24 @@ const CreateProjectModal = ({ onClose, open = true }: Props) => {
           leaveFrom="transform scale-100"
           leaveTo="transform scale-95"
         >
-          <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-gray-900 shadow-xl rounded">
+          <div className="inline-block w-full max-w-md p-4 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded">
             <div>
-              <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+              <div className="mt-2 text-center sm:text-left">
                 <h3 className="text-lg leading-6 font-medium text-gray-900">Create Project</h3>
-                <div className="mt-2">
-                  <div className="py-4">
-                    <input
-                      aria-label="Project Name"
-                      name="name"
-                      placeholder="Project Name"
-                      className=" appearance-none relative mt-1 rounded block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
-                      value={name}
-                      onChange={({ target: { value } }) => setName(value)}
-                    />
-                  </div>
+                <div className="py-4">
+                  <input
+                    aria-label="Project Name"
+                    name="name"
+                    placeholder="Project Name"
+                    className=" appearance-none relative mt-1 rounded block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
+                    value={name}
+                    onChange={({ target: { value } }) => setName(value)}
+                  />
                 </div>
               </div>
             </div>
 
-            <div className="bg-gray-50 p-4 sm:px-6 sm:py-4 sm:flex-wrap sm:flex sm:items-center sm:justify-between">
+            <div className="mt-2 sm:flex-wrap sm:flex sm:items-center sm:justify-between">
               <div className="sm:flex sm:flex-row-reverse">
                 <Button
                   type="primary"

@@ -82,13 +82,13 @@ export async function getServerSideProps({ req }: NextPageContext) {
       id: userProject.project.id,
     },
     include: {
-      ProjectTemplate: true,
+      templates: true,
     },
   });
 
   return {
     props: {
-      templates: project?.ProjectTemplate?.map((t) => omit(t, ["createdAt"])),
+      templates: project?.templates?.map((t) => omit(t, ["createdAt"])),
     },
   };
 }
