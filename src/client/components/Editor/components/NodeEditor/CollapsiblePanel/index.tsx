@@ -4,9 +4,10 @@ import { useRecoilState } from "recoil";
 
 type Props = {
   title: string;
+  hasBorder?: boolean;
 };
 
-export const CollapsiblePanel: React.FC<Props> = ({ title, children }) => {
+export const CollapsiblePanel: React.FC<Props> = ({ title, children, hasBorder = true }) => {
   const [isCollapsed, setCollapsed] = useRecoilState(isSettingsPanelCollapsed(title));
 
   return (
@@ -30,9 +31,11 @@ export const CollapsiblePanel: React.FC<Props> = ({ title, children }) => {
 
       {!isCollapsed && <div>{children}</div>}
 
-      <div className={`px-2 ${isCollapsed ? "py-2" : "pt-4 pb-2"}`}>
-        <div className="w-full bg-gray-200 rounded-lg" style={{ height: 2 }} />
-      </div>
+      {hasBorder && (
+        <div className={`px-2 ${isCollapsed ? "py-2" : "pt-4 pb-2"}`}>
+          <div className="w-full bg-gray-200 rounded-lg" style={{ height: 2 }} />
+        </div>
+      )}
     </div>
   );
 };

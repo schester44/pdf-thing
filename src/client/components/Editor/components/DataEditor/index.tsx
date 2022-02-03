@@ -24,19 +24,21 @@ export const DataEditor = () => {
   }, []);
 
   return (
-    <div className="bg-black text-white h-full">
-      <Editor
-        value={payload}
-        onValueChange={setPayload}
-        highlight={(code: any) => highlight(code, languages.json)}
-        padding={16}
-        style={{
-          fontFamily: '"Fira code", "Fira Mono", monospace',
-          fontSize: 14,
-          height: "100%",
-          outline: "none",
-        }}
-      />
+    <div className="bg-gray-100 text-gray-800 h-full p-4 px-8">
+      <div className="bg-white shadow-lg p-2 rounded-lg">
+        <Editor
+          value={payload}
+          onValueChange={setPayload}
+          highlight={(code: any) => highlight(code, languages.json)}
+          padding={16}
+          style={{
+            fontFamily: '"Fira code", "Fira Mono", monospace',
+            fontSize: 14,
+            height: "100%",
+            outline: "none",
+          }}
+        />
+      </div>
     </div>
   );
 };

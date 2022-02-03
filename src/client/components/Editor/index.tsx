@@ -4,9 +4,10 @@ import { RecoilRoot } from "recoil";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
 
-import { LeftPanel } from "./components/LeftPanel";
 import { MiddlePanel } from "./components/MiddlePanel";
 import { RightPanel } from "./components/RightPanel";
+import { ActionBar } from "./components/ActionBar";
+
 import { Template } from "./types";
 import { useLoadDocument } from "./recoil/hooks/useLoadDocument";
 
@@ -26,14 +27,16 @@ export const Editor = ({ initialTemplate }: Props) => {
   if (!isLoaded) return <div>LOADING</div>;
 
   return (
-    <div className="w-full bg-gray-100 h-full flex">
-      <LeftPanel />
+    <div className="w-full bg-gray-100 h-full flex flex-col ">
+      <ActionBar />
 
-      <div className="flex-1">
-        <MiddlePanel activeWindow={activeWindow} onWindowChange={setActiveWindow} />
+      <div className="flex-1 flex w-full overflow-hidden">
+        <div className="flex-1">
+          <MiddlePanel activeWindow={activeWindow} onWindowChange={setActiveWindow} />
+        </div>
+
+        <RightPanel />
       </div>
-
-      <RightPanel />
     </div>
   );
 };

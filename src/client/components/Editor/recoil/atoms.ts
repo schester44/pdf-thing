@@ -15,6 +15,11 @@ export const documentState = atom({
   default: defaultDocumentState,
 });
 
+export const editorSidePanelViewState = atom({
+  key: "editorSidePanelViewState",
+  default: "elements",
+});
+
 export const pageIdsState = atom<string[]>({
   key: "pageIdsState",
   default: [],
