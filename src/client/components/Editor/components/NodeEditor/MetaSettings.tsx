@@ -60,7 +60,7 @@ export const MetaSettings = ({ nodeId }: Props) => {
             <Setting name="Fixed">
               <input
                 type="checkbox"
-                value={node.props?.fixed || false}
+                checked={node.props?.fixed || false}
                 onChange={(e) => {
                   setNodeState((node) => {
                     if (!node) return node;
@@ -82,7 +82,7 @@ export const MetaSettings = ({ nodeId }: Props) => {
             <Setting name="Repeats">
               <input
                 type="checkbox"
-                value={node.props?.repeats || false}
+                checked={node.props?.repeats || false}
                 onChange={(e) => {
                   setNodeState((node) => {
                     if (!node) return node;

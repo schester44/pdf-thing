@@ -1,7 +1,8 @@
+import React from "react";
+import Link from "next/link";
 import Button from "@client/components/dashboard/Button";
 import { useSaveTemplateMutation } from "@client/graphql/types.generated";
-import React from "react";
-import { FiSave } from "react-icons/fi";
+import { FiArrowLeft, FiSave } from "react-icons/fi";
 import { useRecoilValue } from "recoil";
 import { documentState } from "../../recoil/atoms";
 import { useGetTemplate } from "../../recoil/hooks/useGetTemplate";
@@ -30,9 +31,17 @@ export const ActionBar = () => {
   return (
     <div className=" bg-white px-4 py-3 border-b">
       <div className="h-full w-full flex items-center justify-between">
-        <div>
-          <h1 className="text-md text-gray-800 font-medium">{template.name}</h1>
-          <h4 className="text-xs text-gray-400">{template.key}</h4>
+        <div className="flex items-center">
+          <Link href="/templates">
+            <Button className="mr-4">
+              <FiArrowLeft />
+            </Button>
+          </Link>
+
+          <div>
+            <h1 className="text-md text-gray-800 font-medium">{template.name}</h1>
+            <h4 className="text-xs text-gray-400">{template.key}</h4>
+          </div>
         </div>
 
         <div className="flex">

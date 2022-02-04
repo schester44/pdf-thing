@@ -15,6 +15,13 @@ export const documentState = atom({
   default: defaultDocumentState,
 });
 
+export const sampleDataState = atom({
+  key: "sampleDataState",
+  // need the key map to see which keys have changed.
+  // maps node.id to key.
+  default: { keyMap: {}, payload: '{ "loading": true }' },
+});
+
 export const editorSidePanelViewState = atom({
   key: "editorSidePanelViewState",
   default: "elements",

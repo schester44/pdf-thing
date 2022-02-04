@@ -1,7 +1,12 @@
 import cn from "classnames";
-import { useRef } from "react";
-import { useRecoilValue } from "recoil";
-import { documentState, dropPlaceholderState, pageIdsState } from "../../recoil/atoms";
+import { useEffect, useRef, useState } from "react";
+import { useRecoilCallback, useRecoilValue } from "recoil";
+import {
+  documentState,
+  dropPlaceholderState,
+  pageIdsState,
+  sampleDataState,
+} from "../../recoil/atoms";
 import { NodeSelector } from "../NodeSelector";
 
 import { Page } from "./Page";
@@ -76,7 +81,7 @@ const Canvas = ({ scale, pageWidth, pageHeight }: CanvasProps) => {
     <div>
       <Positioner />
 
-      {pageIds.map((pageId, index) => {
+      {pageIds.map((pageId) => {
         return (
           <div
             key={pageId}

@@ -9,8 +9,6 @@ export const getInitialPayload = (nodes: Template["nodes"]): Record<string, any>
 
   let dataKeys: Record<string, any> = {};
 
-  console.log(nodeIds);
-
   nodeIds.forEach((id) => {
     const node = nodes[id as keyof typeof nodes];
 
