@@ -1,18 +1,23 @@
 import cn from "classnames";
+
 import { useNewNode } from "@client/components/Editor/recoil/hooks";
 import { useDrop } from "react-dnd";
 import { Node as NodeI } from "../../../types";
 import { NodeContainer } from "../NodeContainer";
 import { Node } from "../Node";
 import { BaseNodeProps } from "./types";
-import { useRef } from "react";
+import React from "react";
 import { useRecoilCallback, useRecoilValue, useSetRecoilState } from "recoil";
 import {
   dropPlaceholderState,
   localStorageState,
   nodesState,
+  sampleDataState,
 } from "@client/components/Editor/recoil/atoms";
 import { marginStyles } from "../utils/marginStyles";
+import { createNextPath, removeKeyNesting } from "src/utils/absolute-key";
+import { useSampleData } from "@client/components/Editor/recoil/hooks/useSampleData";
+import { get } from "lodash";
 
 type SetDropPlaceholderProps = {
   offsets: { x: number; y: number };
@@ -27,6 +32,7 @@ const getRelativePosition = ({ offsets, containerBox, scale }) => ({
 
 export const ViewNode = ({
   node,
+  path,
   isSelected,
   isHoverOver,
 
@@ -35,9 +41,33 @@ export const ViewNode = ({
   onMouseLeave,
 }: BaseNodeProps) => {
   const createNode = useNewNode();
-  const ref = useRef(null);
+  const ref = React.useRef(null);
   const { scale } = useRecoilValue(localStorageState("scale"));
-  const dropIndex = useRef();
+  const dropIndex = React.useRef();
+
+  const [sampleData, setSampleData] = React.useState([]);
+
+  const getSampleData = useRecoilCallback(
+    ({ snapshot }) =>
+      async () => {
+        const { payload } = await snapshot.getPromise(sampleDataState);
+
+        return JSON.parse(payload);
+      },
+    []
+  );
+
+  const isArray = !!node.props?.repeats;
+
+  React.useEffect(() => {
+    if (!isArray) return;
+
+    const nextPath = removeKeyNesting(createNextPath(path, node.key));
+
+    getSampleData().then((data) => {
+      setSampleData(get(data, nextPath) || []);
+    });
+  }, [getSampleData, path, node.key]);
 
   const clearDropPlaceholder = useSetRecoilState(dropPlaceholderState);
 
@@ -196,31 +226,64 @@ export const ViewNode = ({
     },
   });
 
+  if (node.props?.repeats && sampleData.length > 0) {
+    const nextPath = createNextPath(path, node.key);
+
+    return sampleData.map((data, index) => {
+      const path = `${nextPath}[${index}]`;
+
+      return (
+        <View node={node} key={`${node.id}-${index}`}>
+          <NodeContainer isHoverOver={isHoverOver} isSelected={isSelected}>
+            {node.nodes?.map((nodeId) => (
+              <Node
+                id={nodeId}
+                path={path}
+                key={nodeId}
+                onMouseEnter={onMouseEnter}
+                onMouseLeave={onMouseLeave}
+              />
+            ))}
+          </NodeContainer>
+        </View>
+      );
+    });
+  }
+
   return drop(
     <div>
-      <div
-        ref={ref}
-        style={{
-          ...node.styles,
-          ...marginStyles(node),
-          opacity: (node.styles?.opacity ?? 100) / 100,
-        }}
-        className={cn({
-          "fixed bottom-0 left-0": node.props?.fixed,
-          "p-4": !node.nodes?.length,
-        })}
-      >
+      <View node={node}>
         <NodeContainer isHoverOver={isHoverOver} isSelected={isSelected}>
           {node.nodes?.map((nodeId) => (
             <Node
               id={nodeId}
+              path={path}
               key={nodeId}
               onMouseEnter={onMouseEnter}
               onMouseLeave={onMouseLeave}
             />
           ))}
         </NodeContainer>
-      </div>
+      </View>
     </div>
   );
 };
+
+const View: React.FC<{ node: NodeI }> = React.forwardRef(({ node, children }, ref) => {
+  return (
+    <div
+      ref={ref}
+      style={{
+        ...node.styles,
+        ...marginStyles(node),
+        opacity: (node.styles?.opacity ?? 100) / 100,
+      }}
+      className={cn({
+        "fixed bottom-0 left-0": node.props?.fixed,
+        "p-4": !node.nodes?.length,
+      })}
+    >
+      {children}
+    </div>
+  );
+});

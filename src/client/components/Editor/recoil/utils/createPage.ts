@@ -15,6 +15,7 @@ export const createNode = ({
 
   const node: Node = {
     id,
+    key: id,
     type,
     parentId,
     name: name || `${type} ${id}`,

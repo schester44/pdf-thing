@@ -45,7 +45,10 @@ export const TextNode = ({ node, isSelected, isHoverOver }: BaseNodeProps) => {
         const path = removeKeyNesting(recursivelyGetAbsoluteKey(nodes, node.id));
 
         const text = node.text.replace(variableRegex, (tag, variable) => {
-          return get(sampleData, `${path}${variable}`) || `{{${variable}}}`;
+          return (
+            get(sampleData, path !== "undefined" ? `${path}${variable}` : variable) ||
+            `{{${variable}}}`
+          );
         });
 
         if (text) {

@@ -124,6 +124,10 @@ const createStyles = (nodeIds: Node["id"][], template: Template) => {
   nodeIds.forEach((nodeId) => {
     const node = template.nodes[nodeId];
 
+    if (node.styles?.fontSize) {
+      node.styles.fontSize = `${node.styles.fontSize}px`;
+    }
+
     styles[nodeId] = node.styles;
   });
 

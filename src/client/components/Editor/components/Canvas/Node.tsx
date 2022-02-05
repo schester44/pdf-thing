@@ -7,13 +7,13 @@ import { nodeMap } from "./nodes";
 
 type Props = {
   id: string;
-
+  path: string;
   // onMouseEnter and onMouseLeave are for recursively updating the parent Node's `isChildHovering` state for displaying the hover placeholder
   onMouseEnter: () => void;
   onMouseLeave: () => void;
 };
 
-export const Node = ({ id, onMouseEnter, onMouseLeave }: Props) => {
+export const Node = ({ id, path, onMouseEnter, onMouseLeave }: Props) => {
   const node = useRecoilValue(nodesState(id));
   const setActiveNode = useSetRecoilState(selectedNodeState);
   const isSelected = useRecoilValue<boolean>(isActiveNode(id));
@@ -57,6 +57,7 @@ export const Node = ({ id, onMouseEnter, onMouseLeave }: Props) => {
       onMouseLeave={_onMouseLeave}
     >
       <Component
+        path={path}
         node={node}
         isSelected={isSelected}
         isHoverOver={isHoverOver && !isChildHovering}

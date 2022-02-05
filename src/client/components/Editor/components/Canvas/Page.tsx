@@ -71,18 +71,19 @@ export const Page = ({ id, width, height, scale }: Props) => {
         }}
       >
         <div className="page">
-          {page.nodes &&
-            page.nodes.map((nodeId) => {
-              return (
-                <Node
-                  id={nodeId}
-                  key={nodeId}
-                  isHovering={nodeId === hoveredNode}
-                  onMouseEnter={() => setHoveredNode(nodeId)}
-                  onMousLeave={() => setHoveredNode(undefined)}
-                />
-              );
-            })}
+          {(page.nodes || []).map((nodeId) => {
+            console.log(page);
+            return (
+              <Node
+                path={page.key!}
+                id={nodeId}
+                key={nodeId}
+                isHovering={nodeId === hoveredNode}
+                onMouseEnter={() => setHoveredNode(nodeId)}
+                onMousLeave={() => setHoveredNode(undefined)}
+              />
+            );
+          })}
         </div>
       </div>
     </div>

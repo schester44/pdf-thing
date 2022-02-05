@@ -18,6 +18,7 @@ export const getInitialPayload = (nodes: Template["nodes"]): Record<string, any>
     if (!!node.key) {
       const absoluteKey = removeKeyNesting(recursivelyGetAbsoluteKey(nodes, id));
 
+      console.log(node.key, absoluteKey);
       dataKeys[absoluteKey] = "";
 
       return;
