@@ -13,11 +13,7 @@ import { AiOutlinePicCenter } from "react-icons/ai";
 import { useRecoilState } from "recoil";
 import { nodesState } from "../../recoil/atoms";
 import { IconButton } from "../IconButton";
-import {
-  MdAlignHorizontalCenter,
-  MdAlignVerticalCenter,
-  MdOutlineAlignHorizontalCenter,
-} from "react-icons/md";
+import { MdAlignHorizontalCenter, MdAlignVerticalCenter } from "react-icons/md";
 
 type Props = { nodeId: Node["id"] };
 

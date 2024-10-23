@@ -1,8 +1,5 @@
-import { logger } from "@server/logging";
 import { UserInputError } from "apollo-server-micro";
 import { mutationField, nonNull, stringArg } from "nexus";
-import { AuthenticatedUserContext } from "@server/graphql/context";
-import { isAuthenticated } from "../auth";
 
 export const createTemplate = mutationField("createTemplate", {
   type: "ProjectTemplate",
@@ -19,6 +16,8 @@ export const createTemplate = mutationField("createTemplate", {
       throw new UserInputError(`Template with key "${key}" already exists.`);
     }
 
+    console.log(ctx);
+
     return ctx.prisma.projectTemplate.create({
       data: {
         key,
@@ -34,8 +33,7 @@ export const createTemplate = mutationField("createTemplate", {
             },
           },
         },
-        // TODO: Get the current project from the session
-        projectId: "1bd73127-41bc-48a5-8eda-f45a897d3808",
+        projectId: ctx.session.currentProject,
       },
     });
   },
